@@ -13,7 +13,7 @@ SoftDev d3 project
  * What will be shown, absent user interaction:  
  A map will be displayed on the initial page. The map will be broken down into various countries where Nobel Laureates would be categorized based on their respective country. Nobel Laureate density (number of Laureates per country) will be displayed through a dot density map. A slider/button will also be displayed to cycle through time periods in which the Laureates won their prizes.
  * How will user interact with your visualization:  
-The dot-density map will consist of interactive dots that, once clicked, will expand and give more information on a specific Laureate. The user will also be able to zoom in by scrolling. The user will also be able to use a slider to adjust the time periods.
+The dot-density map will consist of interactive dots that, once clicked, will expand and give more information on a specific Laureate. The user will also be able to zoom in by scrolling. The user will also be able to use a slider (or input) to adjust the time periods.
 
 ### What questions will your visualization allow user to explore? What questions will it provoke?
  * During what time period, were there the most Nobel Prize Laureates?
