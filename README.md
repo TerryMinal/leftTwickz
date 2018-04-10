@@ -26,5 +26,5 @@ Slider/buttons will add a sort of “time axis” to our data
 
 Post-MVP we will try to map it out on a globe, such as the one found on [this page](http://bl.ocks.org/patricksurry/5721459)
 
-### Example of Dot Density Map
+### Example of Heat Density Map
 ![heat density map](readmeFiles/heat_map.png "illustration of heat map")
