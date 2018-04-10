@@ -7,6 +7,7 @@ SoftDev d3 project
 ### Description of data set:
  * Nobel Laureate data describing field of study, country of origin, year, etc
  * REST API link: https://nobelprize.readme.io/docs/laureate
+ * SVG Map of the World: https://www.amcharts.com/svg-maps/?map=worldWithAntarctica
  * Hopefully with this data visualization, we can find trends in the data and extrapolate it into the future
 
 ### Explanation, in broad strokes if necessary, of how you aim to make this data come alive.
