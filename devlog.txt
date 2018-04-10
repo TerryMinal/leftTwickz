@@ -25,3 +25,6 @@ firstL -- 2018-xx-xx xx:xx
 
 terryG, yuyangZ, charlesW -- 2018-03-28 11:00 PM
 -- edited readme in real time on Google docs and later uploaded by PM Terry
+
+terryG -- 2018-04-09 9:31 PM
+-- updated the readme to reflect new ideas
