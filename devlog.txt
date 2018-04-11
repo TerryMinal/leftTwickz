@@ -40,3 +40,7 @@ terryG -- 2018-04-09 9:31 PM
 terryG, yuyangZ, charlesW, calebS -- 2018-04-10 1:10 PM
 -- assigned work due Friday
 -- began digesting code
+
+calebS -- 2018-04-10 11:09 PM
+-- digest more code
+-- uploaded svg of world map to be used in project
