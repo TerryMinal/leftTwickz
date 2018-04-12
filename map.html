@@ -5,17 +5,13 @@
   <head>
     <title>Noble Prize Winners</title>
     <style>
-      body {
-        margin: 0;
-        background-color: #2A2C39;
-        font-family: 'Yanone Kaffeesatz', sans-serif;
-        font-weight: 200;
-        font-size: 17px;
-      }
-      #map-holder {
+      #svgObject {
         height: 100vh;
         width: 100vw;
       }
+
+      /* rest of styles copied; not sure if needed or not */
+
       svg rect {
         fill: #2A2C39;   /* map background colour */
       }
@@ -41,8 +37,10 @@
   </head>
 
   <body>
-    <div id="map">
-
+    <div id="map-holder">
+      <object id="svgObject" data="./worldHigh.svg" type="image/svg+xml">
+          SVG is supposed to be here
+      </object>
     </div>
     <script src="map.js"></script>
   </body>
