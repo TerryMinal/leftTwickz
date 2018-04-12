@@ -5,6 +5,16 @@
   <head>
     <title>Noble Prize Winners</title>
     <style>
+      .tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+      .tooltip:hover .tooltiptext {
+    visibility: visible;
+      }
+      
       #map-holder {
         height: 100vh;
         width: 100vw;
@@ -40,6 +50,9 @@
   </head>
 
   <body>
+    <h1 id = "country">
+      
+      </h1>
     <div id="map-holder">
       <?xml version="1.0" encoding="utf-8"?>
       <!-- (c) ammap.com | SVG map of World High -->
@@ -321,6 +334,7 @@
       	</g>
       </svg>
 
+    </div>
     </div>
     <script src="map.js"></script>
   </body>

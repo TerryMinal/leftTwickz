@@ -25,16 +25,22 @@ window.onload=function() {
 };
 
 // add events for each path
-var paths = d3.select('svg').selectAll('path')
+var paths = d3.select('svg').selectAll('path');
+var path_title;
 paths.on("mouseover", function(){
     this.setAttribute("class", "country");
     console.log("hi");
-  })
+    path_title= this.getAttribute("title");
+    console.log(path_title);
+    document.getElementById("country").innerHTML = path_title;
+
+});
+
+
+
 paths.on("mouseout", function(){
     this.setAttribute("class", "land");
     console.log("bye");
-  })
-paths.on("click", function(){
+})
 
-  });
 
