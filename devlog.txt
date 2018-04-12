@@ -45,7 +45,15 @@ calebS -- 2018-04-10 11:09 PM
 -- digest more code
 -- uploaded svg of world map to be used in project
 
+zhangY —- 2018-4-10 11:300 PM
+—- Worked to understand article in regards to the SVG map.
+	- Will work on zooming in and popup labels.
+
 charlesW -- 2018-04-11 11:58 PM
 -- started base files
 -- added map to HTML
 -- started js file, but ran into problems with contentDocument
+
+zhangY — 2018-4-11 11:58 PM
+—- Continued looking over page in regards to SVG map.
+
