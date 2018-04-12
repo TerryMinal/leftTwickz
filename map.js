@@ -31,8 +31,10 @@ paths.on("mouseover", function(){
     console.log("hi");
   })
 paths.on("mouseout", function(){
-
+    this.setAttribute("class", "land");
+    console.log("bye");
   })
 paths.on("click", function(){
 
   });
+
