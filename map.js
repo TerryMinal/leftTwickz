@@ -15,11 +15,11 @@ var object, svgDoc, svgItem;
 
 window.onload=function() {
 	// Get the Object by ID
-	object = document.getElementById("svgObject");
+	object = document.getElementById("map-holder");
 	// Get the SVG document inside the Object tag
 	// svgDoc = object.contentDocument;
 	// Get one of the SVG items by ID;
-	svgItem = document.getElementsByTagName("svg")[0];
+	svgItem = object.getElementsByTagName("svg")[0];
 
 	svgItem.setAttribute("fill", "lime");
 };
@@ -27,7 +27,8 @@ window.onload=function() {
 // add events for each path
 var paths = d3.select('svg').selectAll('path')
 paths.on("mouseover", function(){
-    this.style("fill", "red");
+    this.setAttribute("class", "country");
+    console.log("hi");
   })
 paths.on("mouseout", function(){
 
