@@ -13,6 +13,13 @@
 
 var object, svgDoc, svgItem;
 
+var zoom={
+    duration: 1000,
+    zoomLevel: 5
+};
+    
+
+
 window.onload=function() {
 	// Get the Object by ID
 	object = document.getElementById("map-holder");
@@ -46,7 +53,27 @@ paths.on("mouseout", function(){
     console.log("bye");
 });
 
+//zoom in
+/*
+paths.on("click", function(d){
+    var x, y, zoomLevel;
+    if (d && centered != d){
+	var centroid = path.centroid(d);
+	x= centroid[0];
+	y=centroid[1];
+	zomLevel = zoom.zoomlevel;
+	centered = d;
+    }
+    else{
+	x = 500;
+	y = 500;
+	zomLevel = 1;
+	centered = null;
+    }
 
-paths.on("click", function(){
-  paths.call(d3.zoom().on("zoom", zoomed));
+    .transition()
+	.duration(zoom.duration)
+	.attr('transform','translate(' + 250 + ',' + 250 + ')scale(' + zoomLevel + ')translate(' + -x + ',' + -y + ')');
 });
+    */
+
