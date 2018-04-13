@@ -29,8 +29,11 @@ var paths = d3.select('svg').selectAll('path');
 var path_title;
 paths.on("mouseover", function(){
     this.setAttribute("class", "country");
+    d3.select(this).style("cursor", "pointer");
+    
     console.log("hi");
     path_title= this.getAttribute("title");
+    
     console.log(path_title);
     document.getElementById("country").innerHTML = path_title;
 
@@ -41,6 +44,9 @@ paths.on("mouseover", function(){
 paths.on("mouseout", function(){
     this.setAttribute("class", "land");
     console.log("bye");
-})
+});
 
 
+paths.on("click", function(){
+  paths.call(d3.zoom().on("zoom", zoomed));
+});
