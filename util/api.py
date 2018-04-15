@@ -16,8 +16,11 @@ data = temp
 
 # list of all countries
 countries = []
+f = "util/countries.csv"
+if __name__ == "__main__":
+   f = "countries.csv"
 
-with open("countries.csv", "rb") as d:
+with open(f, "rb") as d:
     r = csv.reader(d)
     for row in r:
         countries.append(row[1])
@@ -48,7 +51,7 @@ for i in range(len(data)):
     laureates.append(laureate)
 
 # dictionary with all laureates in each country. Data is organized as such:
-# finalData[country] = [number of laureates born in that country, [list of laureates] ] 
+# finalData[country] = [number of laureates born in that country, [list of laureates] ]
 finalData = {}
 
 for c in countries:
