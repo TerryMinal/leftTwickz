@@ -62,3 +62,7 @@ for c in countries:
             temp.append(l)
             num += 1
     finalData[c] = [num, temp]
+
+def get_data():
+    global finalData
+    return finalData
