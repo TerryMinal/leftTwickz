@@ -56,7 +56,8 @@ paths.on("mouseover", function(){
 });
 
 
-
+//When removing mouse over land, the class will change back
+//Label will  be changed back to world map
 paths.on("mouseout", function(){
     this.setAttribute("class", "land");
     console.log("bye");
@@ -101,3 +102,19 @@ paths.on("click", function(){
 });
     
 
+
+//panning
+
+var pan = d3.behavior.drag()
+    .on("drag", function() {
+	var dx = d3.event.dx;
+	var dy = d3.event.dy;
+	console.log(dx,dy);
+
+
+    });	  	    
+	
+
+
+
+entireScreen.call(pan);
