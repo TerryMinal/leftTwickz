@@ -11,13 +11,21 @@
   ==============================================================================
 */
 
-var object, svgDoc, svgItem;
+var object, svgDoc, svgItem, centered;
 
 var zoom={
     duration: 1000,
     zoomLevel: 5
 };
-    
+
+
+var bBox = document.getElementById("map").getBBox();
+
+var width= bBox.width;
+var height= bBox.height;
+
+console.log("width:"+width);
+console.log("height:"+height);
 
 
 window.onload=function() {
@@ -32,6 +40,7 @@ window.onload=function() {
 };
 
 // add events for each path
+var screen = d3.select('svg');
 var paths = d3.select('svg').selectAll('path');
 var path_title;
 paths.on("mouseover", function(){
@@ -51,29 +60,39 @@ paths.on("mouseover", function(){
 paths.on("mouseout", function(){
     this.setAttribute("class", "land");
     console.log("bye");
+    document.getElementById("country").innerHTML = "World Map";
+    console.log("World Map");
 });
 
 //zoom in
-/*
-paths.on("click", function(d){
+
+function getCentroid(element) {
+    var bbox = element.getBBox();
+    return [bbox.x + bbox.width/2, bbox.y + bbox.height/2];
+}
+
+paths.on("click", function(){
     var x, y, zoomLevel;
-    if (d && centered != d){
-	var centroid = path.centroid(d);
-	x= centroid[0];
-	y=centroid[1];
-	zomLevel = zoom.zoomlevel;
-	centered = d;
+    console.log("click registered");
+    if (this.getAttribute("title") !== "" ){ //&& centered !== d){
+	console.log("clicked "+this.getAttribute("title"));
+	var centroid = getCentroid(this);
+	console.log(getCentroid(this));
+	x = centroid[0];
+	y = centroid[1];
+	zoomLevel = zoom.zoomlevel;
+//	centered = d;
     }
     else{
-	x = 500;
-	y = 500;
-	zomLevel = 1;
+	console.log("did not register click on country");
+	x = width/2;
+	y = height/2;
+	zoomLevel = 1;
 	centered = null;
     }
-
-    .transition()
+    screen.transition()
 	.duration(zoom.duration)
-	.attr('transform','translate(' + 250 + ',' + 250 + ')scale(' + zoomLevel + ')translate(' + -x + ',' + -y + ')');
+	.attr('transform','translate(' + width/2 + ',' + height/2 + ')scale(' + zoomLevel + ')translate(' + -x + ',' + -y + ')');
 });
-    */
+    
 
