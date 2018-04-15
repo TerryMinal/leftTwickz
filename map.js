@@ -40,7 +40,7 @@ window.onload=function() {
 };
 
 // add events for each path
-var screen = d3.select('svg');
+var entireScreen = d3.select('svg');
 var paths = d3.select('svg').selectAll('path');
 var path_title;
 paths.on("mouseover", function(){
@@ -78,28 +78,26 @@ function getBiggerDimension(element) {
 
 paths.on("click", function(){
     var x, y, zoomLevel;
-    //console.log("click registered");
+    console.log("click registered");
     if (this.getAttribute("title") !== "" && centered !== this.getAttribute("title")){
-	//console.log("clicked "+this.getAttribute("title"));
+	console.log("clicked "+this.getAttribute("title"));
 	var centroid = getCentroid(this);
 	console.log(getCentroid(this));
 	x = centroid[0];
 	y = centroid[1];
-	zoom.zoomLevel = 5//(getBiggerDimension(this));
+	zoom.zoomLevel = 3//(getBiggerDimension(this));
 	centered = this.getAttribute("title");
     }
     else{
 	console.log("did not register click on country");
-	x = width/2;
-	y = height/2;
+	x = screen.width/2;
+	y = screen.height/2;
 	zoom.zoomLevel = 1;
 	centered = null;
     }
-    var finalTranslateX = x - width/2;
-    var finalTranslateY = y - height/2;
-    screen.transition()
+    entireScreen.transition()
 	.duration(zoom.duration)
-	.attr('transform','translate(' + width/2 + ',' + height/2 + ')');//scale(' + zoom.zoomLevel + ')translate(' + finalTranslateX + ',' + finalTranslateY + ')');
+	.attr('transform','translate(' + screen.width/2 + ',' + screen.height/2 + ')translate(' + -x + ',' + -y + ')scale(' + zoom.zoomLevel + ')');
 });
     
 
