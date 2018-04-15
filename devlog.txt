@@ -57,5 +57,25 @@ charlesW -- 2018-04-11 11:58 PM
 zhangY — 2018-4-11 11:58 PM
 -- Continued looking over page in regards to SVG map.
 
+zhangY - 2018-4-12 10:30 PM
+—- Created labels for countries.
+ 	- When hovering over a country, their name will be displayed on the corner of the screen.
+	- Was originally going to use popups.
+- Began researching on zooming.
+	- Errors within variables.
+
 charlesW -- 2018-04-12 11:58 PM
 -- set up demo branch for error
+
+zhangY - 2018-4-14 10:30PM
+- Looked over Caleb’s work for zooming.
+	- Noticed scroll wheel functionalities do not work yet.
+	- Will continue working on it.
+	- Left issue on repo.
+
+
+zhangY - 2018-4-15 5:30PM
+- Began panning functionality.
+	- Usage of drag function in d3 may be used.
+	- Used to return dx and dy for change of coordinates when holding down mouse and moving.
+
