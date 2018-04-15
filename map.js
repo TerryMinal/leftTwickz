@@ -71,28 +71,35 @@ function getCentroid(element) {
     return [bbox.x + bbox.width/2, bbox.y + bbox.height/2];
 }
 
+function getBiggerDimension(element) {
+    var bbox = element.getBBox();
+    return Math.max(bbox.width, bbox.height);
+}
+
 paths.on("click", function(){
     var x, y, zoomLevel;
-    console.log("click registered");
-    if (this.getAttribute("title") !== "" ){ //&& centered !== d){
-	console.log("clicked "+this.getAttribute("title"));
+    //console.log("click registered");
+    if (this.getAttribute("title") !== "" && centered !== this.getAttribute("title")){
+	//console.log("clicked "+this.getAttribute("title"));
 	var centroid = getCentroid(this);
 	console.log(getCentroid(this));
 	x = centroid[0];
 	y = centroid[1];
-	zoomLevel = zoom.zoomlevel;
-//	centered = d;
+	zoom.zoomLevel = 5//(getBiggerDimension(this));
+	centered = this.getAttribute("title");
     }
     else{
 	console.log("did not register click on country");
 	x = width/2;
 	y = height/2;
-	zoomLevel = 1;
+	zoom.zoomLevel = 1;
 	centered = null;
     }
+    var finalTranslateX = x - width/2;
+    var finalTranslateY = y - height/2;
     screen.transition()
 	.duration(zoom.duration)
-	.attr('transform','translate(' + width/2 + ',' + height/2 + ')scale(' + zoomLevel + ')translate(' + -x + ',' + -y + ')');
+	.attr('transform','translate(' + width/2 + ',' + height/2 + ')');//scale(' + zoom.zoomLevel + ')translate(' + finalTranslateX + ',' + finalTranslateY + ')');
 });
     
 
