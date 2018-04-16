@@ -1,0 +1,52 @@
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+#map-holder {
+  height: 665.2420043945312px;
+  width: 1009.114990234375px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#map {
+  height: 665.2420043945312px;
+  width: 1009.114990234375px;
+}
+
+.land{
+  fill: #CCCCCC;
+  fill-opacity: 1;
+  stroke:white;
+  stroke-opacity: 1;
+  stroke-width:0.5;
+}
+
+
+/* rest of styles copied; not sure if needed or not */
+
+svg rect {
+  fill: #2A2C39;   /* map background colour */
+}
+.country{
+  fill: #555555;   /* country colour */
+  stroke: #2A2C39; /* country border colour */
+  stroke-width: 1; /* country border width */
+}
+.country-on{
+  fill: #4B5358;   /* highlight colour for selected country */
+}
+.countryLabel{
+  display: none;   /* hide all country labels by default */
+}
+.countryName{
+  fill: #FFFAFF;   /* country label text colour */
+}
+.countryLabelBg{
+  fill: #30BCED;   /* country label background colour */
+}

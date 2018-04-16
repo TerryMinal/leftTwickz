@@ -69,7 +69,7 @@ charlesW -- 2018-04-12 11:58 PM
 
 calebS -- 2018-04-10 3:30 AM
 -- began extensive work on zoom functionality
--- fixed general bugs in the map layout 
+-- fixed general bugs in the map layout
 	- when the mouse moves away from a country and onto an ocean or non country,
 	  the title is "World Map", instead of staying as the most recently hovered-upon
 	  country.
@@ -89,3 +89,7 @@ zhangY - 2018-4-15 5:30PM
 zhangY - 2018-04-15 11:50PM
 - Manipulated zoom to fit usage of panning.
 	- Translation is using dx and dy.
+
+charlesW -- 2018-04-16 02:58 PM
+- separated css from html file
+- raised issue on qaf
