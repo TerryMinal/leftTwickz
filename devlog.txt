@@ -67,12 +67,19 @@ zhangY - 2018-4-12 10:30 PM
 charlesW -- 2018-04-12 11:58 PM
 -- set up demo branch for error
 
-zhangY - 2018-4-14 10:30PM
+calebS -- 2018-04-10 3:30 AM
+-- began extensive work on zoom functionality
+-- fixed general bugs in the map layout 
+	- when the mouse moves away from a country and onto an ocean or non country,
+	  the title is "World Map", instead of staying as the most recently hovered-upon
+	  country.
+-- used translations and scaling, though it is still buggy (uncertain as to why)
+
+zhangY - 2018-4-15 4:00 AM
 - Looked over Caleb’s work for zooming.
 	- Noticed scroll wheel functionalities do not work yet.
 	- Will continue working on it.
 	- Left issue on repo.
-
 
 zhangY - 2018-4-15 5:30PM
 - Began panning functionality.
