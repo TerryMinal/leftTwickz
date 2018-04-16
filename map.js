@@ -87,10 +87,10 @@ paths.on("click", function(){
     if (this.getAttribute("title") !== "" && centered !== this.getAttribute("title")){
 	console.log("clicked "+this.getAttribute("title"));
 	var centroid = getCentroid(this);
-	console.log(getCentroid(this));
 	x = centroid[0];
 	y = centroid[1];
-	zoom.zoomLevel = 4//(getBiggerDimension(this));
+	console.log(getBiggerDimension(this));
+	zoom.zoomLevel = 600/(getBiggerDimension(this));
 	centered = this.getAttribute("title");
     }
     else{
