@@ -44,6 +44,7 @@ window.onload=function() {
 
 // add events for each path
 var entireScreen = d3.select('svg');
+
 var paths = d3.select('svg').selectAll('path');
 var path_title;
 paths.on("mouseover", function(){
@@ -89,19 +90,19 @@ paths.on("click", function(){
 	console.log(getCentroid(this));
 	x = centroid[0];
 	y = centroid[1];
-	zoom.zoomLevel = 3//(getBiggerDimension(this));
+	zoom.zoomLevel = 4//(getBiggerDimension(this));
 	centered = this.getAttribute("title");
     }
     else{
 	console.log("did not register click on country");
-	x = screen.width/2;
-	y = screen.height/2;
+	x =  width/2;
+	y = height/2;
 	zoom.zoomLevel = 1;
 	centered = null;
     }
     entireScreen.transition()
 	.duration(zoom.duration)
-	.attr('transform','translate(' + screen.width/2 + ',' + screen.height/2 + ')translate(' + -x + ',' + -y + ')scale(' + zoom.zoomLevel + ')');
+	.attr('transform','scale(' + zoom.zoomLevel + ')translate(' + width/2 + ',' + height/2 + ')translate(' + -x + ',' + -y + ')');
 });
     
 
