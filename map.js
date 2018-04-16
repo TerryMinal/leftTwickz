@@ -39,6 +39,9 @@ window.onload=function() {
 	svgItem.setAttribute("fill", "lime");
 };
 
+
+
+
 // add events for each path
 var entireScreen = d3.select('svg');
 var paths = d3.select('svg').selectAll('path');
@@ -110,11 +113,19 @@ var pan = d3.behavior.drag()
 	var dx = d3.event.dx;
 	var dy = d3.event.dy;
 	console.log(dx,dy);
+	entireScreen.transition()
+	    .duration(zoom.duration)
+	    .attr('transform','translate(' + screen.width/2 + ',' + screen.height/2 + ')translate(' + dx + ',' + dy + ')scale(' + zoom.zoomLevel + ')');
+});
+   
+    
 
 
-    });	  	    
-	
+
+
+
 
 
 
 entireScreen.call(pan);
+
