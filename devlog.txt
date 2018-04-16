@@ -86,3 +86,6 @@ zhangY - 2018-4-15 5:30PM
 	- Usage of drag function in d3 may be used.
 	- Used to return dx and dy for change of coordinates when holding down mouse and moving.
 
+zhangY - 2018-04-15 11:50PM
+- Manipulated zoom to fit usage of panning.
+	- Translation is using dx and dy.
