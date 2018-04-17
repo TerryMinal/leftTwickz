@@ -45,7 +45,7 @@ calebS -- 2018-04-10 11:09 PM
 -- digest more code
 -- uploaded svg of world map to be used in project
 
-zhangY —- 2018-4-10 11:30 PM
+yuyangZ —- 2018-4-10 11:30 PM
 -- Worked to understand article in regards to the SVG map.
 	- Will work on zooming in and popup labels.
 
@@ -54,10 +54,10 @@ charlesW -- 2018-04-11 11:58 PM
 -- added map to HTML
 -- started js file, but ran into problems with contentDocument
 
-zhangY — 2018-4-11 11:58 PM
+yuyangZ — 2018-4-11 11:58 PM
 -- Continued looking over page in regards to SVG map.
 
-zhangY - 2018-4-12 10:30 PM
+yuyangZ - 2018-4-12 10:30 PM
 —- Created labels for countries.
  	- When hovering over a country, their name will be displayed on the corner of the screen.
 	- Was originally going to use popups.
@@ -75,18 +75,18 @@ calebS -- 2018-04-10 3:30 AM
 	  country.
 -- used translations and scaling, though it is still buggy (uncertain as to why)
 
-zhangY - 2018-4-15 4:00 AM
+yuyangZ - 2018-4-15 4:00 AM
 -- Looked over Caleb’s work for zooming.
 	- Noticed scroll wheel functionalities do not work yet.
 	- Will continue working on it.
 	- Left issue on repo.
 
-zhangY - 2018-4-15 5:30PM
+yuyangZ - 2018-4-15 5:30PM
 -- Began panning functionality.
 	- Usage of drag function in d3 may be used.
 	- Used to return dx and dy for change of coordinates when holding down mouse and moving.
 
-zhangY - 2018-04-15 11:50PM
+yuyangZ - 2018-04-15 11:50PM
 -- Manipulated zoom to fit usage of panning.
 	- Translation is using dx and dy.
 
