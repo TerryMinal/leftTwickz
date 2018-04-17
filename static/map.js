@@ -42,6 +42,7 @@ var projection = d3.geo.mercator();
 
 
 
+
  //for tooltip 
     var offsetL = document.getElementById('map-holder').offsetLeft+10;
     var offsetT = document.getElementById('map-holder').offsetTop+10;
@@ -63,20 +64,33 @@ function showTooltip(d) {
 
 
 // mouseover and mouseout event listeners
+var originalColor;
+
 paths.on("mouseover", function(){
-    this.setAttribute("class", "country");
+    if (this.getAttribute("class") == "land"){
+	this.setAttribute("class", "selected");
+	console.log("things")
+    }else{
+	d3.select(this).style("stroke", "green").style("stroke-width", "1");
+	console.log("stufs");
+    }
+	
     d3.select(this).style("cursor", "pointer");
-
     path_title= this.getAttribute("title");
-
     document.getElementById("country").innerHTML = path_title;
 
+      
+	  
     showTooltip();
 
 });
 
 paths.on("mouseout", function(){
-    this.setAttribute("class", "land");
+    if ((this.getAttribute("class") == "selected")){
+	this.setAttribute("class", "land");
+    }else{
+	d3.select(this).style("stroke", "white");
+    }
     document.getElementById("country").innerHTML = "World Map";
 });
 
