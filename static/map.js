@@ -33,34 +33,33 @@ window.onload=function() {
 	// svgItem.setAttribute("fill", "lime");
 };
 
-//creates slider
-   d3.select("body").insert("p", ":first-child").append("input")
-        .attr("type", "range")
-        .attr("min", "1900")
-        .attr("max", "2018")
-        .attr("value", init_year)
-    .attr("id", "year");
-
-d3.select("body").insert("h2", ":first-child").text( "Nobel Laureates in "+ init_year);
-
-
-//when slider is being used
-d3.select("#year").on("input", function() {
-    function updateYear(){
-	d3.select("h2").text("Nobel Laureates in " + d3.select("#year").node().value);
-    }
-    updateYear();
-    console.log("Used");
-});
-
-//better slider (currently does not work)
-//d3.select('body').call(d3.slider().axis(true).min(2000).max(2100).step(5));
-
 
 // add events for each path
 var entireScreen = d3.select('svg');
 var paths = d3.select('svg').selectAll('path');
 var path_title;
+var projection = d3.geo.mercator();
+
+
+
+ //for tooltip 
+    var offsetL = document.getElementById('map-holder').offsetLeft+10;
+    var offsetT = document.getElementById('map-holder').offsetTop+10;
+
+    var path = d3.geo.path()
+        .projection(projection);
+
+    var tooltip = d3.select("#map")
+         .append("div")
+        .attr("class", "tooltip hidden");
+
+function showTooltip(d) {
+      var mouse = d3.mouse(entireScreen.node())
+        .map( function(d) { return parseInt(d); } );
+      tooltip.classed("hidden", false)
+        .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
+        .html(path_title);
+    }
 
 
 // mouseover and mouseout event listeners
@@ -71,6 +70,8 @@ paths.on("mouseover", function(){
     path_title= this.getAttribute("title");
 
     document.getElementById("country").innerHTML = path_title;
+
+    showTooltip();
 
 });
 
@@ -244,3 +245,28 @@ const plot_heat = function(data){
 }
 
 plot_heat(ex);
+
+
+//creates slider
+   d3.select("body").insert("p", ":first-child").append("input")
+        .attr("type", "range")
+        .attr("min", "1900")
+        .attr("max", "2018")
+        .attr("value", init_year)
+    .attr("id", "year");
+
+d3.select("body").insert("h2", ":first-child").text( "Nobel Laureates in "+ init_year);
+
+
+//when slider is being used
+d3.select("#year").on("input", function() {
+    function updateYear(){
+	d3.select("h2").text("Nobel Laureates in " + d3.select("#year").node().value);
+    }
+    updateYear();
+    console.log("Used");
+});
+
+//better slider (currently does not work)
+//d3.select('body').call(d3.slider().axis(true).min(2000).max(2100).step(5));
+
