@@ -17,6 +17,7 @@ var height= bBox.height;
 var currCenterX = width/2;
 var currCenterY = height/2;
 var currZoom = 1;
+var init_year = 1900
 
 
 var zoom={
@@ -27,10 +28,33 @@ var zoom={
 var object, svgDoc, svgItem, centered;
 
 window.onload=function() {
-	object = document.getElementById("map-holder");
+    object = document.getElementById("map-holder");
 	svgItem = object.getElementsByTagName("svg")[0];
 	// svgItem.setAttribute("fill", "lime");
 };
+
+//creates slider
+   d3.select("body").insert("p", ":first-child").append("input")
+        .attr("type", "range")
+        .attr("min", "1900")
+        .attr("max", "2018")
+        .attr("value", init_year)
+    .attr("id", "year");
+
+d3.select("body").insert("h2", ":first-child").text( "Nobel Laureates in "+ init_year);
+
+
+//when slider is being used
+d3.select("#year").on("input", function() {
+    function updateYear(){
+	d3.select("h2").text("Nobel Laureates in " + d3.select("#year").node().value);
+    }
+    updateYear();
+    console.log("Used");
+});
+
+//better slider (currently does not work)
+//d3.select('body').call(d3.slider().axis(true).min(2000).max(2100).step(5));
 
 
 // add events for each path
