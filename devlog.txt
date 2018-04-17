@@ -109,8 +109,10 @@ charlesW -- 2018-04-16 11:58 PM
   -- cleaned up js file
   -- created heat map functions
 
-yuyangZ —- 2018-04-17 2:00 AM
-—- Created slider.
+yuyangZ -- 2018-04-17 2:00 AM
+  - Created slider.
 	- Sliding across slider will change the year of the map.
 	- I have found a better d3 slider but have not been able to implement it year.
 
+guanT -- 2018-04-17 1:00 PM
+  - Changed api calling to be done with jQuery and vanilla JS
