@@ -46,7 +46,7 @@ calebS -- 2018-04-10 11:09 PM
 -- uploaded svg of world map to be used in project
 
 zhangY —- 2018-4-10 11:30 PM
-—- Worked to understand article in regards to the SVG map.
+-- Worked to understand article in regards to the SVG map.
 	- Will work on zooming in and popup labels.
 
 charlesW -- 2018-04-11 11:58 PM
@@ -76,20 +76,31 @@ calebS -- 2018-04-10 3:30 AM
 -- used translations and scaling, though it is still buggy (uncertain as to why)
 
 zhangY - 2018-4-15 4:00 AM
-- Looked over Caleb’s work for zooming.
+-- Looked over Caleb’s work for zooming.
 	- Noticed scroll wheel functionalities do not work yet.
 	- Will continue working on it.
 	- Left issue on repo.
 
 zhangY - 2018-4-15 5:30PM
-- Began panning functionality.
+-- Began panning functionality.
 	- Usage of drag function in d3 may be used.
 	- Used to return dx and dy for change of coordinates when holding down mouse and moving.
 
 zhangY - 2018-04-15 11:50PM
-- Manipulated zoom to fit usage of panning.
+-- Manipulated zoom to fit usage of panning.
 	- Translation is using dx and dy.
-
+	
+calebS, yuyangZ -- 2018-04-16 1:19 PM
+-- Fixed zoom functionality!
+	- Zoom depends on the size of the clicked country. This means a large country like 
+	  Russia will cause a smaller zoom than a small country like Ecuador.
+	  
 charlesW -- 2018-04-16 02:58 PM
-- separated css from html file
-- raised issue on qaf
+-- Separated css from html file
+-- Raised issue on qaf
+
+calebS -- 2018-04-16 10:30 PM
+-- Added panning functionality.
+	- When a user clicks and drags, after the mouse is unclicked the map will pan accordingly.
+	- The panning also works when zoomed in.
+	- Note: when the user drags off the map screen, panning does not occur.
