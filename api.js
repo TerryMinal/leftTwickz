@@ -43,6 +43,7 @@ var laureates = [];
     } // end of if
   } // end of data iteration
 
+
 // creating a dictionary of this form:
 // final: {
     // yr: [# of laureates in a specified country, specified country, list of laureates]
@@ -52,7 +53,26 @@ var laureates = [];
 //     2018: [0, USA, [] ]
 //   }
 // NOTE: each yr's data is sorted in descending order
+
 var final = {};
+var tem = [];
+for (var c = 0; c < countries.length;  c++) {
+  var count = 0;
+  var t = [];
+  var li;
+  for (var l = 0; l < laureates.length; l++) {
+    if (laureates[l]['bornCountry'].indexOf(countries[c]) != -1) {
+      t.push(laureates[l]);
+      count++;
+    } // if statement
+  } // laureate for loop
+  li = [count, countries[c], t];
+  // console.log(li);
+  tem.push(li);
+} // country for loop
+tem.sort(function sortNumber(a,b) {return a[0] - b[0];}).reverse();
+final['all'] = tem;
+
 for (var yr = 1901; yr < 2019; yr++) {
   var t2 = [];
   for (var c = 0; c < countries.length;  c++) {
@@ -69,9 +89,10 @@ for (var yr = 1901; yr < 2019; yr++) {
     // console.log(li);
     t2.push(li);
   } // country for loop
-  final[yr] = t2.sort().reverse();
+  final[yr] = t2.sort(function sortNumber(a,b) {return a[0] - b[0];}).reverse();
 } // year for loop
 
+// console.log(final['all']);
 console.log(final[2016]);
 // console.log(final[2016][0]);
 // for (var key in final) {
