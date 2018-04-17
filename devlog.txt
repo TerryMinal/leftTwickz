@@ -89,12 +89,12 @@ zhangY - 2018-4-15 5:30PM
 zhangY - 2018-04-15 11:50PM
 -- Manipulated zoom to fit usage of panning.
 	- Translation is using dx and dy.
-	
+
 calebS, yuyangZ -- 2018-04-16 1:19 PM
 -- Fixed zoom functionality!
-	- Zoom depends on the size of the clicked country. This means a large country like 
+	- Zoom depends on the size of the clicked country. This means a large country like
 	  Russia will cause a smaller zoom than a small country like Ecuador.
-	  
+
 charlesW -- 2018-04-16 02:58 PM
 -- Separated css from html file
 -- Raised issue on qaf
@@ -104,3 +104,7 @@ calebS -- 2018-04-16 10:30 PM
 	- When a user clicks and drags, after the mouse is unclicked the map will pan accordingly.
 	- The panning also works when zoomed in.
 	- Note: when the user drags off the map screen, panning does not occur.
+
+  charlesW -- 2018-04-16 11:58 PM
+  -- cleaned up js file
+  -- created heat map functions
