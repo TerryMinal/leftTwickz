@@ -63,7 +63,7 @@ for c in countries:
             num += 1
     finalData.append([num, c, temp])
     finalData.sort(reverse=True)
-    
+
 def get_data(**opt):
     global finalData
     r = {}
@@ -111,7 +111,7 @@ def get_data(**opt):
 
 if __name__ == "__main__":
     # pprint(data)
-    pprint(finalData)
+    # pprint(finalData)
     # print finalData
-    # n = get_data()
-    # pprint(n['all'])
+    n = get_data()
+    pprint(n[2016])
