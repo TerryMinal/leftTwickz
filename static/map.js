@@ -14,14 +14,15 @@
 var bBox = document.getElementById("map").getBBox();
 var width= bBox.width;
 var height= bBox.height;
+var currCenterX = width/2;
+var currCenterY = height/2;
+var currZoom = 1;
+
 
 var zoom={
   duration: 1000,
   zoomLevel: 5
 };
-
-console.log("width:"+width);
-console.log("height:"+height);
 
 var object, svgDoc, svgItem, centered;
 
@@ -43,19 +44,15 @@ paths.on("mouseover", function(){
     this.setAttribute("class", "country");
     d3.select(this).style("cursor", "pointer");
 
-    console.log("hi");
     path_title= this.getAttribute("title");
 
-    console.log(path_title);
     document.getElementById("country").innerHTML = path_title;
 
 });
 
 paths.on("mouseout", function(){
     this.setAttribute("class", "land");
-    console.log("bye");
     document.getElementById("country").innerHTML = "World Map";
-    console.log("World Map");
 });
 
 
@@ -78,18 +75,14 @@ function getBiggerDimension(element) {
 
 paths.on("click", function(){
     var x, y, zoomLevel;
-    console.log("click registered");
     if (this.getAttribute("title") !== "" && centered !== this.getAttribute("title")){
-	console.log("clicked "+this.getAttribute("title"));
 	var centroid = getCentroid(this);
 	x = centroid[0];
 	y = centroid[1];
-	console.log(getBiggerDimension(this));
 	zoom.zoomLevel = 600/(getBiggerDimension(this));
 	centered = this.getAttribute("title");
     }
     else{
-	console.log("did not register click on country");
 	x =  width/2;
 	y = height/2;
 	zoom.zoomLevel = 1;
@@ -98,12 +91,54 @@ paths.on("click", function(){
     entireScreen.transition()
 	.duration(zoom.duration)
 	.attr('transform','scale(' + zoom.zoomLevel + ')translate(' + width/2 + ',' + height/2 + ')translate(' + -x + ',' + -y + ')');
-});
+    currCenterX = x;
+    currCenterY = y;
+    currZoom = zoom.zoomLevel;
 
+    console.log("Center X: " + currCenterX);
+    console.log("Center Y: " + currCenterY);
+    console.log("Zoom: " + currZoom);    
+});
 
 
 //panning
 
+var startX;
+var startY;
+
+entireScreen.on("mousedown", function(){
+    var coordinates = [0, 0];
+    coordinates = d3.mouse(this);
+    startX = coordinates[0];
+    startY = coordinates[1];
+});
+
+
+var endX;
+var endY;
+
+entireScreen.on("mouseup", function(){
+    var coordinates = [0, 0];
+    coordinates = d3.mouse(this);
+    endX = coordinates[0];
+    endY = coordinates[1];
+    if (endX == startX && endY == startY){
+	console.log("should zoom here if on a country");
+    }
+    else{
+	var x = -(endX - startX) + currCenterX; 
+	var y = -(endY - startY) + currCenterY;
+//start - end because in the first translation we push the top left corner of the map to the center of the viewing screen. Therefore, when we translate to the desired center we must negate the value, as seen below. 
+	entireScreen.transition()
+	    .duration(zoom.duration)
+	    .attr('transform','scale(' + currZoom + ')translate(' + width/2 + ',' + height/2 + ')translate(' + -x + ',' + -y + ')');
+
+	currCenterX = x;
+	currCenterY = y;
+
+    }
+});
+/*
 var pan = d3.behavior.drag()
     .on("drag", function() {
 	var dx = d3.event.dx;
@@ -116,7 +151,7 @@ var pan = d3.behavior.drag()
 
 
 entireScreen.call(pan);
-
+*/
 
 
 

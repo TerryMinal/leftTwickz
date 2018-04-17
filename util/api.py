@@ -31,7 +31,7 @@ with open(f, "rb") as d:
 laureates = []
 for i in range(len(data)):
     p = data[i]
-    laureate = {"bornCountry": p['bornCountry'], "category": p['prizes'][0]['category'], "awardYear": p['prizes'][0]['year']}
+    laureate = {"bornCountry": p['bornCountry'], "category": p['prizes'][0]['category'], "awardYear": p['prizes'][0]['year'], "share": p['prizes'][0]['share']}
     try:
         laureate["bornCity"] = p['bornCity']
     except:
@@ -63,6 +63,26 @@ for c in countries:
             num += 1
     finalData[c] = [num, temp]
 
-def get_data():
+def get_data(**opt):
     global finalData
-    return finalData
+    r = {}
+    if 'year' in opt:
+        yr = opt['year']
+        for key in finalData:
+            temp = []
+            count = 0
+            for i in finalData[key][1]:
+                # print i
+                if i["awardYear"] == yr:
+                    temp.append(i)
+                    count += 1
+            r[key] = [count, temp]
+    else:
+        r = finalData
+    return r
+
+
+if __name__ == "__main__":
+    # pprint(data)
+    # pprint(finalData)
+    pprint(get_data(year="2017"))
