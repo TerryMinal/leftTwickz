@@ -123,3 +123,7 @@ entireScreen.call(pan);
                           Data Manipulation
   ==============================================================================
 */
+
+
+var ex = {}
+var log = false;
