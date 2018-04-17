@@ -1,6 +1,6 @@
 import requests
-import json
 import csv
+import json
 from pprint import pprint #module that adds pretty printing
 
 data = requests.get('http://api.nobelprize.org/v1/laureate.json?')
@@ -52,7 +52,7 @@ for i in range(len(data)):
 
 # dictionary with all laureates in each country. Data is organized as such:
 # finalData[country] = [number of laureates born in that country, [list of laureates] ]
-finalData = {}
+finalData = []
 
 for c in countries:
     temp = []
@@ -61,28 +61,57 @@ for c in countries:
         if l["bornCountry"] == c:
             temp.append(l)
             num += 1
-    finalData[c] = [num, temp]
-
+    finalData.append([num, c, temp])
+    finalData.sort(reverse=True)
+    
 def get_data(**opt):
     global finalData
     r = {}
-    if 'year' in opt:
-        yr = opt['year']
-        for key in finalData:
-            temp = []
+    r['all'] = finalData
+    for yr in range(1901, 2019):
+        templist = []
+        for c in countries:
+            templist2 = []
             count = 0
-            for i in finalData[key][1]:
-                # print i
-                if i["awardYear"] == yr:
-                    temp.append(i)
+            for l in laureates:
+                if int(l['awardYear']) == yr and l['bornCountry'] == c:
+                    templist2.append(l)
                     count += 1
-            r[key] = [count, temp]
-    else:
-        r = finalData
+            templist.append([count, c, templist2])
+        templist.sort(reverse=True)
+        r[yr] = templist
     return r
+    # r = {}
+    # if 'year' in opt:
+    #     yr = opt['year']
+    #     if 'single' in opt and opt['single']:
+    #         for key in finalData:
+    #             temp = []
+    #             count = 0
+    #             for i in finalData[key][1]:
+    #                 # print i
+    #                 if i["awardYear"] == yr:
+    #                     temp.append(i)
+    #                     count += 1
+    #             r[key] = [count, temp]
+    #     elif 'upto' in opt and opt['upto']:
+    #         for key in finalData:
+    #             temp = []
+    #             count = 0
+    #             for i in finalData[key][1]:
+    #                 # print i
+    #                 if int(i["awardYear"]) <= int(yr):
+    #                     temp.append(i)
+    #                     count += 1
+    #             r[key] = [count, temp]
+    # else:
+    #     r = finalData
+    # return r
 
 
 if __name__ == "__main__":
     # pprint(data)
-    # pprint(finalData)
-    pprint(get_data(year="2017"))
+    pprint(finalData)
+    # print finalData
+    # n = get_data()
+    # pprint(n['all'])
