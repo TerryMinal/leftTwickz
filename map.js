@@ -118,12 +118,70 @@ var pan = d3.behavior.drag()
 entireScreen.call(pan);
 
 
+
+
 /*
   ==============================================================================
                           Data Manipulation
   ==============================================================================
 */
 
-
-var ex = {}
+var ex = [[32,'United Kingdom'], [4, 'China'], [2, 'Ireland'], [8, "United States"], [16, "Mexico"], [2, 'Russia']];
 var log = false;
+
+const findMax = function(data){
+  var temp = 0;
+  for( i = 0; i < data.length; i ++){
+    if (data[i][0] > temp)
+      temp = data[i][0];
+  }
+  return temp;
+}
+
+const updateScale = function(){
+  // do scale switching
+}
+
+// finds the appropriate class bracket for the heat map for a number given the base
+// basically floor(log base b of n)
+// should return 1-5
+const findBracket = function(b, n){
+  var ans = 1;
+  while(n > b){
+    n = n / b;
+    ans++;
+  }
+  return ans;
+}
+
+const plot_heat = function(data){
+  var max = findMax(data);
+  // if linear case else log case
+  if (max < 6){
+    for (var i = 0; i < data.length; i++){
+      var x = d3.selectAll('path[title="' + data[i][1] + '"]');
+      x.attr('class', "heat" + data[i][0]);
+      console.log(data);
+      console.log(country);
+    }
+    console.log('linear');
+  } else{
+    // find appropriate scale
+    console.log('log');
+    var base = 1;
+    while (base * base * base * base * base < max){
+      console.log('log');
+      base++;
+    }
+    for (var i = 0; i < data.length; i++){
+      var x = d3.selectAll('path[title="' + data[i][1] + '"]');
+      x.attr('class', "heat" + findBracket(base, data[i][0]));
+      console.log(data);
+      console.log(country);
+    }
+    console.log('log');
+  }
+  console.log("did the thing");
+}
+
+plot_heat(ex);
