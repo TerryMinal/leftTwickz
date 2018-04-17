@@ -7,61 +7,50 @@
 
 /*
   ==============================================================================
-                                  Variables/Initiation
+                      Variable Declaration and Page Initiation
   ==============================================================================
 */
 
-var object, svgDoc, svgItem, centered;
-
-var zoom={
-    duration: 1000,
-    zoomLevel: 5
-};
-
-
 var bBox = document.getElementById("map").getBBox();
-
 var width= bBox.width;
 var height= bBox.height;
+
+var zoom={
+  duration: 1000,
+  zoomLevel: 5
+};
 
 console.log("width:"+width);
 console.log("height:"+height);
 
+var object, svgDoc, svgItem, centered;
 
 window.onload=function() {
-	// Get the Object by ID
 	object = document.getElementById("map-holder");
-	// Get the SVG document inside the Object tag
-	// svgDoc = object.contentDocument;
-	// Get one of the SVG items by ID;
 	svgItem = object.getElementsByTagName("svg")[0];
-
-	svgItem.setAttribute("fill", "lime");
+	// svgItem.setAttribute("fill", "lime");
 };
-
-
 
 
 // add events for each path
 var entireScreen = d3.select('svg');
-
 var paths = d3.select('svg').selectAll('path');
 var path_title;
+
+
+// mouseover and mouseout event listeners
 paths.on("mouseover", function(){
     this.setAttribute("class", "country");
     d3.select(this).style("cursor", "pointer");
-    
+
     console.log("hi");
     path_title= this.getAttribute("title");
-    
+
     console.log(path_title);
     document.getElementById("country").innerHTML = path_title;
 
 });
 
-
-//When removing mouse over land, the class will change back
-//Label will  be changed back to world map
 paths.on("mouseout", function(){
     this.setAttribute("class", "land");
     console.log("bye");
@@ -69,7 +58,13 @@ paths.on("mouseout", function(){
     console.log("World Map");
 });
 
-//zoom in
+
+
+/*
+  ==============================================================================
+                         Zoom Related Functions
+  ==============================================================================
+*/
 
 function getCentroid(element) {
     var bbox = element.getBBox();
@@ -104,7 +99,7 @@ paths.on("click", function(){
 	.duration(zoom.duration)
 	.attr('transform','scale(' + zoom.zoomLevel + ')translate(' + width/2 + ',' + height/2 + ')translate(' + -x + ',' + -y + ')');
 });
-    
+
 
 
 //panning
@@ -118,15 +113,13 @@ var pan = d3.behavior.drag()
 	    .duration(zoom.duration)
 	    .attr('transform','translate(' + screen.width/2 + ',' + screen.height/2 + ')translate(' + dx + ',' + dy + ')scale(' + zoom.zoomLevel + ')');
 });
-   
-    
-
-
-
-
-
-
 
 
 entireScreen.call(pan);
 
+
+/*
+  ==============================================================================
+                          Data Manipulation
+  ==============================================================================
+*/
