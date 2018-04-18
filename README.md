@@ -16,6 +16,7 @@ Do you smell what Alfred is cooking? Me neither, he died a long time ago. But, h
   `api --> python --> Flask --> js(JSON)`
 
   `api --> js`
+
   Cut out the middle man when you can
 
 ###
