@@ -22,7 +22,7 @@ Do you smell what Alfred is cooking? Me neither, he died a long time ago. But, h
 
 ### How to use
 Here's what you'll see
-![example](worldHigh.svg "what you'll see")
+![example](readme/world.svg "what you'll see")
 
  * You'll be shown a heat map based on number of Nobel Laureates from each country
  * You can toggle which individual year to see like 2017. Or you can toggle to see up to a certain year, say 1901-2016.
