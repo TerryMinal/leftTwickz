@@ -10,6 +10,7 @@ Do you smell what Alfred is cooking? Me neither, he died a long time ago. But, h
 ### Launch Instructions
  * Download or clone this repo
  * Open map.html in your browser
+
  (YES! We didn't use Flask and python for data processing! Why? Here's an illustration of data flow: api --> python --> Flask --> js(JSON) vs api --> js) Cut out the middle man when you can
 
 ###
