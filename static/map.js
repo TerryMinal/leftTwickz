@@ -5,6 +5,7 @@
   2018-4-?
 */
 
+
 /*
   ==============================================================================
                       Variable Declaration and Page Initiation
@@ -43,7 +44,7 @@ var projection = d3.geo.mercator();
 
 
 
- //for tooltip 
+ //for tooltip
     var offsetL = document.getElementById('map-holder').offsetLeft+10;
     var offsetT = document.getElementById('map-holder').offsetTop+10;
 
@@ -74,13 +75,13 @@ paths.on("mouseover", function(){
 	d3.select(this).style("stroke", "green").style("stroke-width", "1");
 	console.log("stufs");
     }
-	
+
     d3.select(this).style("cursor", "pointer");
     path_title= this.getAttribute("title");
     document.getElementById("country").innerHTML = path_title;
 
-      
-	  
+
+
     showTooltip();
 
 });
@@ -136,7 +137,7 @@ paths.on("click", function(){
 
     console.log("Center X: " + currCenterX);
     console.log("Center Y: " + currCenterY);
-    console.log("Zoom: " + currZoom);    
+    console.log("Zoom: " + currZoom);
 });
 
 
@@ -165,9 +166,9 @@ entireScreen.on("mouseup", function(){
 	console.log("should zoom here if on a country");
     }
     else{
-	var x = -(endX - startX) + currCenterX; 
+	var x = -(endX - startX) + currCenterX;
 	var y = -(endY - startY) + currCenterY;
-//start - end because in the first translation we push the top left corner of the map to the center of the viewing screen. Therefore, when we translate to the desired center we must negate the value, as seen below. 
+//start - end because in the first translation we push the top left corner of the map to the center of the viewing screen. Therefore, when we translate to the desired center we must negate the value, as seen below.
 	entireScreen.transition()
 	    .duration(zoom.duration)
 	    .attr('transform','scale(' + currZoom + ')translate(' + width/2 + ',' + height/2 + ')translate(' + -x + ',' + -y + ')');
@@ -192,7 +193,113 @@ var pan = d3.behavior.drag()
 entireScreen.call(pan);
 */
 
+/*
+  ==============================================================================
+                                  DATA INITIATION
+  ==============================================================================
+*/
+var data; // will store data retrieved from nobel prize API
+var countries; // stores a list of countries
 
+// makes API call to get a list of all countries
+$.ajax({
+  url:'https://restcountries.eu/rest/v2/all?fields=name',
+  async: false,
+  success: function(d) {
+    countries = d;
+  }
+});
+// end of API call to get a list of all countries
+
+// makes an array of countries (the above api call originally returned an array of OBJ)
+var temp = [];
+for (var i = 0;  i < countries.length; i++) {
+  temp.push(countries[i]["name"]);
+}
+countries = temp;
+//  adjusts for discrepancies between country api and nobelprize api
+countries[countries.indexOf('United States of America')] = 'USA';
+countries[countries.indexOf('United Kingdom of Great Britain and Northern Ireland')] = 'United Kingdom';
+// end of creating countries array
+
+// make API call for nobel laureates data
+$.ajax({
+  // url:'http://ap2i.nobelprize.org/v1/laureate.json?',
+  url: '/nobel',
+  async: false,
+  success: function(d) {
+    d = JSON.parse(d);
+    d = d['laureates'];
+    data = d;
+  } // end of success
+});
+// end of API call for nobel laureate
+
+// forms a dictionary of relevant data for each laureate. Appends that dictionary to a list of laureates
+var laureates = [];
+  for (var i = 0; i < data.length; i++) {
+    if (data[i]['born'] != '0000-00-00') {
+      p = data[i];
+      laureate = {"name": p['firstname'] + p['surname'], "bornCountry": p['bornCountry'], "category": p['prizes'][0]['category'], "awardYear": p['prizes'][0]['year'], "motivation": p['prizes'][0]['motivation'], "share": p['prizes'][0]['share']};
+      laureates.push(laureate);
+    } // end of if
+  } // end of data iteration
+
+
+// creating a dictionary of this form:
+// final: {
+    // yr: [# of laureates in a specified country, specified country, list of laureates]
+// }
+// example:
+//   final: {
+//     2018: [0, USA, [] ]
+//   }
+// NOTE: each yr's data is sorted in descending order
+
+var final = {};
+var tem = [];
+for (var c = 0; c < countries.length;  c++) {
+  var count = 0;
+  var t = [];
+  var li;
+  for (var l = 0; l < laureates.length; l++) {
+    if (laureates[l]['bornCountry'].indexOf(countries[c]) != -1) {
+      t.push(laureates[l]);
+      count++;
+    } // if statement
+  } // laureate for loop
+  li = [count, countries[c], t];
+  // console.log(li);
+  tem.push(li);
+} // country for loop
+tem.sort(function sortNumber(a,b) {return a[0] - b[0];}).reverse();
+final['all'] = tem;
+
+for (var yr = 1901; yr < 2019; yr++) {
+  var t2 = [];
+  for (var c = 0; c < countries.length;  c++) {
+    var count = 0;
+    var t = [];
+    var li;
+    for (var l = 0; l < laureates.length; l++) {
+      if (laureates[l]['bornCountry'].indexOf(countries[c]) != -1 && parseInt(laureates[l]['awardYear']) == yr) {
+        t.push(laureates[l]);
+        count++;
+      } // if statement
+    } // laureate for loop
+    li = [count, countries[c], t];
+    // console.log(li);
+    t2.push(li);
+  } // country for loop
+  final[yr] = t2.sort(function sortNumber(a,b) {return a[0] - b[0];}).reverse();
+} // year for loop
+
+// console.log(final['all']);
+console.log(final[2016]);
+// console.log(final[2016][0]);
+// for (var key in final) {
+//   console.log(final[key]);
+// }
 
 /*
   ==============================================================================
@@ -200,7 +307,6 @@ entireScreen.call(pan);
   ==============================================================================
 */
 
-var ex = [[32,'United Kingdom'], [4, 'China'], [2, 'Ireland'], [8, "United States"], [16, "Mexico"], [2, 'Russia']];
 var log = false;
 
 const findMax = function(data){
@@ -258,7 +364,7 @@ const plot_heat = function(data){
   console.log("did the thing");
 }
 
-plot_heat(ex);
+plot_heat(data);
 
 
 //creates slider
@@ -283,4 +389,3 @@ d3.select("#year").on("input", function() {
 
 //better slider (currently does not work)
 //d3.select('body').call(d3.slider().axis(true).min(2000).max(2100).step(5));
-
