@@ -116,3 +116,6 @@ yuyangZ -- 2018-04-17 2:00 AM
 
 guanT -- 2018-04-17 1:00 PM
   - Changed api calling to be done with jQuery and vanilla JS
+
+guanT -- 2018-04-18 12:00 AM
+  - Brought project into compliance
