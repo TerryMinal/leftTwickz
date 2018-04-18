@@ -295,7 +295,7 @@ for (var yr = 1901; yr < 2019; yr++) {
 } // year for loop
 
 // console.log(final['all']);
-console.log(final[2016]);
+// console.log(final[2016]);
 // console.log(final[2016][0]);
 // for (var key in final) {
 //   console.log(final[key]);
@@ -335,7 +335,7 @@ const findBracket = function(b, n){
 }
 
 const plot_heat = function(data){
-  var max = findMax(data);
+  var max = data[0];
   // if linear case else log case
   if (max < 6){
     for (var i = 0; i < data.length; i++){
@@ -364,7 +364,7 @@ const plot_heat = function(data){
   console.log("did the thing");
 }
 
-plot_heat(data);
+plot_heat(final['all']);
 
 
 //creates slider
