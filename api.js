@@ -38,7 +38,7 @@ var laureates = [];
   for (var i = 0; i < data.length; i++) {
     if (data[i]['born'] != '0000-00-00') {
       p = data[i];
-      laureate = {"bornCountry": p['bornCountry'], "category": p['prizes'][0]['category'], "awardYear": p['prizes'][0]['year'], "share": p['prizes'][0]['share']};
+      laureate = {"name": p['firstname'] + p['surname'], "bornCountry": p['bornCountry'], "category": p['prizes'][0]['category'], "awardYear": p['prizes'][0]['year'], "motivation": p['prizes'][0]['motivation'], "share": p['prizes'][0]['share']};
       laureates.push(laureate);
     } // end of if
   } // end of data iteration
