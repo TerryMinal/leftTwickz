@@ -4,7 +4,7 @@
   P #01: Viz
   2018-4-?
 */
-function pop_it() {
+function pop_it(currCountry) {
     var popup = document.getElementById("myPopup");
     popup.classList.toggle("show");
     console.log("popped");
@@ -83,6 +83,8 @@ paths.on("mouseover", function(){
     d3.select(this).style("cursor", "pointer");
     path_title= this.getAttribute("title");
     document.getElementById("country").innerHTML = path_title;
+    document.getElementById("myPopup").innerHTML = path_title;
+    pop_it(path_title);
 
 
 
@@ -97,6 +99,7 @@ paths.on("mouseout", function(){
 	d3.select(this).style("stroke", "white");
     }
     document.getElementById("country").innerHTML = "World Map";
+    pop_it(path_title);
     path_title = "Ocean";
 });
 
@@ -145,11 +148,7 @@ paths.on("click", function(){
     console.log("Zoom: " + currZoom);
 
 //popup labels
-
-      document.getElementById("myPopup").innerHTML = path_title;
-      path_title = "Ocean: No laureates here!";
-
-
+    setTimeout(function(){ document.getElementById("myPopup").innerHTML = path_title;}, zoom.duration)
 });
 
 
