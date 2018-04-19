@@ -24,7 +24,7 @@ countries[countries.indexOf('United Kingdom of Great Britain and Northern Irelan
 
 // make API call for nobel laureates data
 $.ajax({
-  url:'http://api.nobelprize.org/v1/laureate.json?',
+  url:'/nobel',
   async: false,
   success: function(d) {
     d = d['laureates'];
