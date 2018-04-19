@@ -69,3 +69,13 @@
   /* stroke: red; */
   stroke-width: .5;
 }
+
+.one{
+  float: left;
+  width: 10%;
+}
+
+.two{
+  float: right;
+  width: 90%;
+}
