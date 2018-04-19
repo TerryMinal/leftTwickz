@@ -4,7 +4,11 @@
   P #01: Viz
   2018-4-?
 */
-
+function pop_it() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+    console.log("popped");
+}
 
 /*
   ==============================================================================
@@ -18,7 +22,7 @@ var height= bBox.height;
 var currCenterX = width/2;
 var currCenterY = height/2;
 var currZoom = 1;
-var init_year = 1900
+var init_year = 1901;
 
 
 var zoom={
@@ -93,6 +97,7 @@ paths.on("mouseout", function(){
 	d3.select(this).style("stroke", "white");
     }
     document.getElementById("country").innerHTML = "World Map";
+    path_title = "Ocean";
 });
 
 
@@ -138,7 +143,15 @@ paths.on("click", function(){
     console.log("Center X: " + currCenterX);
     console.log("Center Y: " + currCenterY);
     console.log("Zoom: " + currZoom);
+
+//popup labels
+
+      document.getElementById("myPopup").innerHTML = path_title;
+      path_title = "Ocean: No laureates here!";
+
+
 });
+
 
 
 //panning
@@ -374,9 +387,9 @@ var w = 140, h = 400;
 
     var legend = key.append("defs").append("svg:linearGradient").attr("id", "gradient").attr("x1", "100%").attr("y1", "0%").attr("x2", "100%").attr("y2", "100%").attr("spreadMethod", "pad");
 
-    legend.append("stop").attr("offset", "0%").attr("stop-color", "#B30000").attr("stop-opacity", 1);
+    legend.append("stop").attr("offset", "0%").attr("stop-color", "rgba(255,80,80,1)").attr("stop-opacity", 1);
 
-    legend.append("stop").attr("offset", "100%").attr("stop-color", "#FEE8c8").attr("stop-opacity", 1);
+    legend.append("stop").attr("offset", "100%").attr("stop-color", "rgba(255,80,80,.1)").attr("stop-opacity", 1);
 
     key.append("rect").attr("width", w - 100).attr("height", h - 100).style("fill", "url(#gradient)").attr("transform", "translate(0,10)");
 
@@ -392,8 +405,8 @@ const updateLegend = function(){
 //creates slider
    d3.select("body").insert("p", ":first-child").append("input")
         .attr("type", "range")
-        .attr("min", "1900")
-        .attr("max", "2018")
+        .attr("min", "1901")
+        .attr("max", "2017")
         .attr("value", init_year)
     .attr("id", "year");
 
