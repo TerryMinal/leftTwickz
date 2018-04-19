@@ -294,6 +294,7 @@ for (var yr = 1901; yr < 2019; yr++) {
   final[yr] = t2.sort(function sortNumber(a,b) {return a[0] - b[0];}).reverse();
 } // year for loop
 
+// console.log(final);
 // console.log(final['all']);
 // console.log(final[2016]);
 // console.log(final[2016][0]);
@@ -335,14 +336,14 @@ const findBracket = function(b, n){
 }
 
 const plot_heat = function(data){
-  var max = data[0];
+  var max = data[0][0];
   // if linear case else log case
   if (max < 6){
     for (var i = 0; i < data.length; i++){
       var x = d3.selectAll('path[title="' + data[i][1] + '"]');
       x.attr('class', "heat" + data[i][0]);
-      console.log(data);
-      console.log(country);
+      // console.log(data);
+      // console.log(country);
     }
     console.log('linear');
   } else{
@@ -350,7 +351,7 @@ const plot_heat = function(data){
     console.log('log');
     var base = 1;
     while (base * base * base * base * base < max){
-      console.log('log');
+      // console.log('log');
       base++;
     }
     for (var i = 0; i < data.length; i++){
@@ -359,12 +360,12 @@ const plot_heat = function(data){
       console.log(data);
       console.log(country);
     }
-    console.log('log');
+    // console.log('log');
   }
   console.log("did the thing");
 }
 
-plot_heat(final['all']);
+plot_heat(final[2016]);
 
 
 //creates slider
