@@ -119,3 +119,10 @@ guanT -- 2018-04-17 1:00 PM
 
 guanT -- 2018-04-18 12:00 AM
   - Brought project into compliance
+
+yuyangZ —- 2018-04-18 12:00 AM
+- Added legend
+	- Year displayed in legend matches year in title with slider.
+- Added popup.
+	- Popup is done through javascript.
+	- Wrong names popup sometimes.
