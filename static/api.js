@@ -3,18 +3,22 @@ var countries; // stores a list of countries
 
 // makes API call to get a list of all countries
 $.ajax({
-  url:'https://restcountries.eu/rest/v2/all?fields=name',
+  url:'https://restcountries.eu/rest/v2/all?fields=name;alpha2Code',
   async: false,
   success: function(d) {
+    console.log(d);
     countries = d;
   }
 });
+
+var counID = [];
 // end of API call to get a list of all countries
 
 // makes an array of countries (the above api call originally returned an array of OBJ)
 var temp = [];
 for (var i = 0;  i < countries.length; i++) {
   temp.push(countries[i]["name"]);
+  counID.push(countries[i]["alpha2Code"])
 }
 countries = temp;
 //  adjusts for discrepancies between country api and nobelprize api
@@ -22,6 +26,7 @@ countries[countries.indexOf('United States of America')] = 'USA';
 countries[countries.indexOf('United Kingdom of Great Britain and Northern Ireland')] = 'United Kingdom';
 // end of creating countries array
 
+// console.log(counID);
 // make API call for nobel laureates data
 $.ajax({
   // url:'http://ap2i.nobelprize.org/v1/laureate.json?',
@@ -68,11 +73,12 @@ for (var c = 0; c < countries.length;  c++) {
       count++;
     } // if statement
   } // laureate for loop
-  li = [count, countries[c], t];
+  li = [counID[c], count, countries[c], t];
   // console.log(li);
   tem.push(li);
 } // country for loop
-tem.sort(function sortNumber(a,b) {return a[0] - b[0];}).reverse();
+tem.sort();
+// tem.sort(function sortNumber(a,b) {return a[0] - b[0];}).reverse();
 final['all'] = tem;
 
 for (var yr = 1901; yr < 2019; yr++) {
@@ -87,14 +93,16 @@ for (var yr = 1901; yr < 2019; yr++) {
         count++;
       } // if statement
     } // laureate for loop
-    li = [count, countries[c], t];
+    li = [counID[c], count, countries[c], t];
     // console.log(li);
     t2.push(li);
   } // country for loop
-  final[yr] = t2.sort(function sortNumber(a,b) {return a[0] - b[0];}).reverse();
+  // final[yr] = t2.sort(function sortNumber(a,b) {return a[0] - b[0];}).reverse();
+  final[yr] = t2.sort();
 } // year for loop
 
 // console.log(final['all']);
+console.log("final");
 console.log(final[2016]);
 // console.log(final[2016][0]);
 // for (var key in final) {
