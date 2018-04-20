@@ -10,6 +10,8 @@ function pop_it(currCountry) {
     console.log("popped");
 }
 
+
+
 /*
   ==============================================================================
                       Variable Declaration and Page Initiation
@@ -121,8 +123,48 @@ function getBiggerDimension(element) {
     return Math.max(bbox.width, bbox.height);
 }
 
+//adds table to popup
+var created_table = false;
+var table = document.createElement('table');
+table.setAttribute('border','1');
+table.setAttribute('width','100%')
+var row = table.insertRow(0);
+for(j=1; j<=1; j++){
+    var text = document.createTextNode("Info");
+    var cell = row.insertCell(j-1);
+    cell.setAttribute('align','center')
+    cell.appendChild(text);
+}
+for(j=1; j<=1; j++){
+    var text = document.createTextNode("Name");
+    var cell = row.insertCell(j-1);
+    cell.setAttribute('align','center')
+    cell.appendChild(text);
+}
+
 paths.on("click", function(){
+
     var x, y, zoomLevel;
+
+if (created_table == false){
+    $( function() {
+        $( "#dialog" ).dialog();
+        //document.getElementById("dialog").appendChild(table);
+     // document.getElementById("dialog").innerHTML = path_title;
+  document.getElementById("dialog").appendChild(table);
+    });
+    created_table = true;
+    console.log(created_table);
+  }
+  else{
+    $( function() {
+        $( "#dialog" ).dialog();
+
+      });
+  }
+
+
+
     if (this.getAttribute("title") !== "" && centered !== this.getAttribute("title")){
 	var centroid = getCentroid(this);
 	x = centroid[0];
@@ -149,6 +191,9 @@ paths.on("click", function(){
 
 //popup labels
     setTimeout(function(){ document.getElementById("myPopup").innerHTML = path_title;}, zoom.duration)
+
+
+
 });
 
 
