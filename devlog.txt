@@ -126,3 +126,9 @@ yuyangZ —- 2018-04-18 12:00 AM
 - Added popup.
 	- Popup is done through javascript.
 	- Wrong names popup sometimes.
+
+yuyangZ —- 2018-04-19 12:00AM
+- Added popup windows for placing laureates in tables.
+	- Clicking on a country will trigger the window to pop up.
+	- However zooming out, also triggers the window.
+		- Must be fixed.
