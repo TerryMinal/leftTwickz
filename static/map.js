@@ -146,23 +146,6 @@ paths.on("click", function(){
 
     var x, y, zoomLevel;
 
-if (created_table == false){
-    $( function() {
-        $( "#dialog" ).dialog();
-        //document.getElementById("dialog").appendChild(table);
-     // document.getElementById("dialog").innerHTML = path_title;
-  document.getElementById("dialog").appendChild(table);
-    });
-    created_table = true;
-    console.log(created_table);
-  }
-  else{
-    $( function() {
-        $( "#dialog" ).dialog();
-
-      });
-  }
-
 
 
     if (this.getAttribute("title") !== "" && centered !== this.getAttribute("title")){
@@ -192,7 +175,24 @@ if (created_table == false){
 //popup labels
     setTimeout(function(){ document.getElementById("myPopup").innerHTML = path_title;}, zoom.duration)
 
+if (currZoom != 1){
+    if (created_table == false){
+        $( function() {
+            $( "#dialog" ).dialog();
+            //document.getElementById("dialog").appendChild(table);
+         // document.getElementById("dialog").innerHTML = path_title;
+      document.getElementById("dialog").appendChild(table);
+        });
+        created_table = true;
+        console.log(created_table);
+      }
+      else{
+        $( function() {
+            $( "#dialog" ).dialog();
 
+          });
+      }
+}
 
 });
 
