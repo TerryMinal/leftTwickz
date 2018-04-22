@@ -393,6 +393,7 @@ const findBracket = function(b, n){
     n = n / b;
     ans++;
   }
+  console.log(ans);
   return ans;
 }
 
@@ -416,10 +417,14 @@ const plot_heat = function(data){
       base++;
     }
     for (var i = 0; i < data.length; i++){
-      var x = d3.selectAll('path[title="' + data[i][1] + '"]');
-      x.attr('class', "heat" + findBracket(base, data[i][0]));
-      console.log(data);
-      console.log(country);
+      var x = d3.select('.' + data[i][0]);
+      if(data[i][0] != 0){
+        x.classed("land", false)
+         .classed("heat" + findBracket(base, data[i][1]), true);
+      }
+      // console.log(data);
+      console.log(x);
+      console.log('.' + data[i][0]);
     }
     // console.log('log');
   }
