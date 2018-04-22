@@ -253,10 +253,10 @@ var startX;
 var startY;
 
 entireScreen.on("mousedown", function(){
-  var[ coordinates = [0, 0];
+  var coordinates = [0, 0];
   coordinates = d3.mouse(this);
   startX = coordinates[0];
-  sta]rtY = coordinates[1];
+  startY = coordinates[1];
 });
 
 
