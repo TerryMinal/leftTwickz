@@ -132,3 +132,7 @@ yuyangZ —- 2018-04-19 12:00AM
 	- Clicking on a country will trigger the window to pop up.
 	- However zooming out, also triggers the window.
 		- Must be fixed.
+
+charlesW -- 2018-04-22 07:52 PM
+  - put labels in js file
+  - heat mapping function not in compliance anymore
