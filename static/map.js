@@ -7,7 +7,7 @@
 function pop_it(currCountry) {
     var popup = document.getElementById("myPopup");
     popup.classList.toggle("show");
-    console.log("popped");
+    //console.log"popped");
 }
 
 
@@ -76,10 +76,10 @@ var originalColor;
 paths.on("mouseover", function(){
     if (this.getAttribute("class") == "land"){
 	this.setAttribute("class", "selected");
-	console.log("things")
+	//console.log"things")
     }else{
 	d3.select(this).style("stroke", "green").style("stroke-width", "1");
-	console.log("stufs");
+	//console.log"stufs");
     }
 
     d3.select(this).style("cursor", "pointer");
@@ -168,9 +168,9 @@ paths.on("click", function(){
     currCenterY = y;
     currZoom = zoom.zoomLevel;
 
-    console.log("Center X: " + currCenterX);
-    console.log("Center Y: " + currCenterY);
-    console.log("Zoom: " + currZoom);
+    //console.log"Center X: " + currCenterX);
+    //console.log"Center Y: " + currCenterY);
+    //console.log"Zoom: " + currZoom);
 
 //popup labels
     setTimeout(function(){ document.getElementById("myPopup").innerHTML = path_title;}, zoom.duration)
@@ -184,7 +184,7 @@ if (currZoom != 1){
       document.getElementById("dialog").appendChild(table);
         });
         created_table = true;
-        console.log(created_table);
+        //console.logcreated_table);
       }
       else{
         $( function() {
@@ -220,7 +220,7 @@ entireScreen.on("mouseup", function(){
     endX = coordinates[0];
     endY = coordinates[1];
     if (endX == startX && endY == startY){
-	console.log("should zoom here if on a country");
+	//console.log"should zoom here if on a country");
     }
     else{
 	var x = -(endX - startX) + currCenterX;
@@ -240,7 +240,7 @@ var pan = d3.behavior.drag()
     .on("drag", function() {
 	var dx = d3.event.dx;
 	var dy = d3.event.dy;
-	console.log(dx,dy);
+	//console.logdx,dy);
 	entireScreen.transition()
 	    .duration(zoom.duration)
 	    .attr('transform','translate(' + screen.width/2 + ',' + screen.height/2 + ')translate(' + dx + ',' + dy + ')scale(' + zoom.zoomLevel + ')');
@@ -305,6 +305,15 @@ var laureates = [];
     } // end of if
   } // end of data iteration
 
+var print_int = {};
+/*
+for (x = 0; x< final.length, x += 1)
+  if (final[x] == d3.select("#year").node().value){
+
+  }
+
+*/
+
 
 // creating a dictionary of this form:
 // final: {
@@ -329,7 +338,7 @@ for (var c = 0; c < countries.length;  c++) {
     } // if statement
   } // laureate for loop
   li = [counID[c], count, countries[c], t];
-  // console.log(li);
+  // //console.logli);
   tem.push(li);
 } // country for loop
 tem.sort(function sortNumber(a,b) {return a[0] - b[0];}).reverse();
@@ -348,21 +357,36 @@ for (var yr = 1901; yr < 2019; yr++) {
       } // if statement
     } // laureate for loop
     li = [counID[c], count, countries[c], t];
-    // console.log(li);
+    // //console.logli);
     t2.push(li);
   } // country for loop
   // final[yr] = t2.sort(function sortNumber(a,b) {return a[0] - b[0];}).reverse();
   final[yr] = t2.sort();
 } // year for loop
 
-// console.log(final);
-// console.log(final['all']);
-// console.log(final[2016]);
-// console.log(final[2016][0]);
+// //console.logfinal);
+// //console.logfinal['all']);
+// //console.logfinal[2016]);
+// //console.logfinal[2016][0]);
 // for (var key in final) {
-//   console.log(final[key]);
+//   //console.logfinal[key]);
 // }
 
+console.log("EEEEEE" + final[2000]);
+
+for (x=0; x < final[2000].length; x += 1){
+  var item = "Guam";
+  if (item in final[2000][x]){
+    console.log(final[2000][x]);
+    console.log("true");
+  }
+  else{
+    console.log(final[2000][x]);
+    console.log("false");
+  }
+
+}
+console.log("WWWWW " + final[2000][10]);
 /*
   ==============================================================================
                           Data Manipulation
@@ -403,27 +427,27 @@ const plot_heat = function(data){
     for (var i = 0; i < data.length; i++){
       var x = d3.selectAll('path[title="' + data[i][1] + '"]');
       x.attr('class', "heat" + data[i][0]);
-      // console.log(data);
-      // console.log(country);
+      // //console.logdata);
+      // //console.logcountry);
     }
-    console.log('linear');
+    //console.log'linear');
   } else{
     // find appropriate scale
-    console.log('log');
+    //console.log'log');
     var base = 1;
     while (base * base * base * base * base < max){
-      // console.log('log');
+      // //console.log'log');
       base++;
     }
     for (var i = 0; i < data.length; i++){
       var x = d3.selectAll('path[title="' + data[i][1] + '"]');
       x.attr('class', "heat" + findBracket(base, data[i][0]));
-      console.log(data);
-      console.log(country);
+      //console.logdata);
+      //console.logcountry);
     }
-    // console.log('log');
+    // //console.log'log');
   }
-  console.log("did the thing");
+  //console.log"did the thing");
 }
 
 plot_heat(final[2016]);
@@ -468,7 +492,7 @@ d3.select("#year").on("input", function() {
     }
     updateYear();
     updateLegend();
-    console.log("Used");
+    //console.log"Used");
 });
 
 //better slider (currently does not work)
