@@ -70,6 +70,36 @@
   stroke-width: .5;
 }
 
+.heat1s{
+  fill: rgba(255,80,80,.1);
+  stroke: red;
+  stroke-width: .5;
+}
+
+.heat2s{
+  fill: rgba(255,80,80,.325);
+  stroke: red;
+  stroke-width: .5;
+}
+
+.heat3s{
+  fill: rgba(255,80,80,.45);
+  stroke: red;
+  stroke-width: .5;7
+}
+
+.heat4s{
+  fill: rgba(255,80,80,.75);
+  stroke: red;
+  stroke-width: .5;
+}
+
+.heat5s{
+  fill: rgba(255,80,80,1);
+  stroke: red;
+  stroke-width: .5;
+}
+
 .one{
   float: left;
   width: 10%;
