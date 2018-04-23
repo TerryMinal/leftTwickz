@@ -9,6 +9,7 @@ Do you smell what Alfred is cooking? Me neither, he died a long time ago. But, h
 
 ### Launch Instructions
  * Download or clone this repo
+ * Open a virtualenv and run `pip install json` and `pip install flask`
  * Run `python app.py` in the git directory
  * open up localhost:5000 in a browser
 
@@ -23,7 +24,7 @@ Here's what you'll see
 ![example](readme/world.svg "what you'll see")
 
  * You'll be shown a heat map based on number of Nobel Laureates from each country
- * You can toggle which individual year to see like 2017. Or you can toggle to see up to a certain year, say 1901-2016.
+ * You can toggle which individual year to see like 2017
 
 ### Thought Provoking Thoughts
  * Does a time period affect the types of prizes awarded?
@@ -33,3 +34,5 @@ Here's what you'll see
 ### D3 feature utilization:
 Each country will be a selection that can be used to incorporate the data
 Slider/buttons will add a sort of “time axis” to our data
+Used svg and d3 to draw out the map
+Used svg to find the centroids of each country to display pop up

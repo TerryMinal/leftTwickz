@@ -12,14 +12,14 @@ zone of reflection:
 -- Displayed data into javascript table.
 -- Panning has been partially fixed.
 -- Zooming in with d3.
- 
+
  LESSONS LEARNED
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- Better our understanding of data schemas.
 -- Linear scaling v. log scaling.
 -- Comments save lives.
 -- General understanding of d3.
- 
+
 OBJECTIVES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Friday, 2018-04-13: Digest map and implement code: (YUYANG, CHARLES, CALEB)
@@ -122,10 +122,10 @@ yuyangZ -- 2018-04-17 2:00 AM
 	- Sliding across slider will change the year of the map.
 	- I have found a better d3 slider but have not been able to implement it year.
 
-guanT -- 2018-04-17 1:00 PM
+terryG -- 2018-04-17 1:00 PM
   - Changed api calling to be done with jQuery and vanilla JS
 
-guanT -- 2018-04-18 12:00 AM
+terryG -- 2018-04-18 12:00 AM
   - Brought project into compliance
 
 yuyangZ —- 2018-04-18 12:00 AM
@@ -178,7 +178,10 @@ charlesW -- 2018-04-22 07:52 PM
     - plot() plots current data
   - reworked classes to take advantage of class precedence
   - cleaned up css for paths
-  
-  calebS -- 2018-04-23 03:00 AM
+
+calebS -- 2018-04-23 03:00 AM
    - General bug fixes
    - Hover functionality for displaying country names
+
+terryG -- 2018-04-23 4:00 AM
+  - Added tables to pop ups

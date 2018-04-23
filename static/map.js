@@ -152,7 +152,7 @@ for (var yr = 1901; yr < 2019; yr++) {
   final[yr] = t2.sort();
 } // year for loop
 
-
+console.log(final);
 
 
 /*
