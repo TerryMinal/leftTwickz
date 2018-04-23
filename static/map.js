@@ -147,6 +147,10 @@ d3.select("#year").on("input", function() {
   d3.selectAll("text").remove();
   key.append("g").attr("class", "y axis")
   .attr("transform", "translate(41,10)").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 30).attr("dy", ".71em").style("text-anchor", "end").text("Nobel Laureates in " + d3.select("#year").node().value);
+resetMapData();
+addYear(d3.select("#year").node().value);
+plot();
+
 });
 
 
@@ -203,7 +207,7 @@ legend.append("stop").attr("offset", "0%").attr("stop-color", "rgba(255,80,80,1)
 legend.append("stop").attr("offset", "100%").attr("stop-color", "rgba(255,80,80,.1)").attr("stop-opacity", 1);
 
 key.append("rect").attr("width", w - 100).attr("height", h - 100).style("fill", "url(#gradient)").attr("transform", "translate(0,10)");
-var y = d3.scale.linear().range([300, 0]).domain([1, 100]);
+var y = d3.scale.linear().range([300, 0]).domain([1, 5]);
 var yAxis = d3.svg.axis().scale(y).orient("right");
 
 
@@ -556,6 +560,7 @@ const heat = function(d){
     // do log things (post mvp)
   }
 }
+
 
 
 /*
