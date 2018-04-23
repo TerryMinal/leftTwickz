@@ -8,18 +8,9 @@ zone of reflection:
 
 OBSTACLES OVERCOME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- Created labels when hovering over country.
-- Linked slider to heat map.
-- Displayed data into javascript table.
-- Panning has been partially fixed.
-- Zooming in with d3.
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- Better our understanding of data schemas.
-- Linear scaling v. log scaling.
-- Comments save lives.
-- General understanding of d3.
 
 OBJECTIVES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -28,6 +19,7 @@ Friday, 2018-04-13: Digest map and implement code: (YUYANG, CHARLES, CALEB)
  * Panning capabilities
  * Zoom capabilities
  Finish API calling (TERRY)
+
 
  ______   ______   __   __   __       ______   _______
 /_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\
