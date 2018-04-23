@@ -130,10 +130,11 @@ function pop_it(currCountry) {
 */
 
 paths.on("mouseover", function(){
-  if (this.getAttribute("class") == "land"){
-  	this.setAttribute("class", "selected");
-  }else{
-  	d3.select(this).style("stroke", "green").style("stroke-width", "1");
+  var x = d3.select(this);
+  if (x.classed("land") || x.classed("heat0")){
+    x.classed("selected", true);
+  }else if (x.classed('heat1') || x.classed('heat2') || x.classed('heat3') || x.classed('heat4') || x.classed('heat5')) {
+    x.classed("heatSelect", true);
   }
 
   d3.select(this).style("cursor", "pointer");
@@ -146,11 +147,13 @@ paths.on("mouseover", function(){
 });
 
 paths.on("mouseout", function(){
-  if ((this.getAttribute("class") == "selected")){
-  	this.setAttribute("class", "land");
-  }else{
-  	d3.select(this).style("stroke", "white");
+  var x = d3.select(this);
+  if (x.classed("land") || x.classed("heat0")){
+    x.classed("selected", false);
+  }else if (x.classed('heat1') || x.classed('heat2') || x.classed('heat3') || x.classed('heat4') || x.classed('heat5')) {
+    x.classed("heatSelect", false);
   }
+  
   document.getElementById("country").innerHTML = "World Map";
   pop_it(path_title);
   path_title = "Ocean";
@@ -425,64 +428,85 @@ for (var yr = 1901; yr < 2019; yr++) {
   ==============================================================================
 */
 
+// log scale
 var log = false;
+var scale;
+var max;
 
-const findMax = function(data){
+// list of dictionaries of the countries in the order that path appears
+var mapData = [{id:"AD"},{id:"AE"},{id:"AF"},{id:"AG"},{id:"AI"},{id:"AL"},{id:"AM"},{id:"AO"},{id:"AR"},{id:"AS"},{id:"AT"},{id:"AU"},{id:"AW"},{id:"AX"},{id:"AZ"},{id:"BA"},{id:"BB"},{id:"BD"},{id:"BE"},{id:"BF"},{id:"BG"},{id:"BH"},{id:"BI"},{id:"BJ"},{id:"BL"},{id:"BN"},{id:"BO"},{id:"BM"},{id:"BQ"},{id:"BR"},{id:"BS"},{id:"BT"},{id:"BV"},{id:"BW"},{id:"BY"},{id:"BZ"},{id:"CA"},{id:"CC"},{id:"CD"},{id:"CF"},{id:"CG"},{id:"CH"},{id:"CI"},{id:"CK"},{id:"CL"},{id:"CM"},{id:"CN"},{id:"CO"},{id:"CR"},{id:"CU"},{id:"CV"},{id:"CW"},{id:"CX"},{id:"CY"},{id:"CZ"},{id:"DE"},{id:"DJ"},{id:"DK"},{id:"DM"},{id:"DO"},{id:"DZ"},{id:"EC"},{id:"EG"},{id:"EE"},{id:"EH"},{id:"ER"},{id:"ES"},{id:"ET"},{id:"FI"},{id:"FJ"},{id:"FK"},{id:"FM"},{id:"FO"},{id:"FR"},{id:"GA"},{id:"GB"},{id:"GE"},{id:"GD"},{id:"GF"},{id:"GG"},{id:"GH"},{id:"GI"},{id:"GL"},{id:"GM"},{id:"GN"},{id:"GO"},{id:"GP"},{id:"GQ"},{id:"GR"},{id:"GS"},{id:"GT"},{id:"GU"},{id:"GW"},{id:"GY"},{id:"HK"},{id:"HM"},{id:"HN"},{id:"HR"},{id:"HT"},{id:"HU"},{id:"ID"},{id:"IE"},{id:"IL"},{id:"IM"},{id:"IN"},{id:"IO"},{id:"IQ"},{id:"IR"},{id:"IS"},{id:"IT"},{id:"JE"},{id:"JM"},{id:"JO"},{id:"JP"},{id:"JU"},{id:"KE"},{id:"KG"},{id:"KH"},{id:"KI"},{id:"KM"},{id:"KN"},{id:"KP"},{id:"KR"},{id:"XK"},{id:"KW"},{id:"KY"},{id:"KZ"},{id:"LA"},{id:"LB"},{id:"LC"},{id:"LI"},{id:"LK"},{id:"LR"},{id:"LS"},{id:"LT"},{id:"LU"},{id:"LV"},{id:"LY"},{id:"MA"},{id:"MC"},{id:"MD"},{id:"MG"},{id:"ME"},{id:"MF"},{id:"MH"},{id:"MK"},{id:"ML"},{id:"MO"},{id:"MM"},{id:"MN"},{id:"MP"},{id:"MQ"},{id:"MR"},{id:"MS"},{id:"MT"},{id:"MU"},{id:"MV"},{id:"MW"},{id:"MX"},{id:"MY"},{id:"MZ"},{id:"NA"},{id:"NC"},{id:"NE"},{id:"NF"},{id:"NG"},{id:"NI"},{id:"NL"},{id:"NO"},{id:"NP"},{id:"NR"},{id:"NU"},{id:"NZ"},{id:"OM"},{id:"PA"},{id:"PE"},{id:"PF"},{id:"PG"},{id:"PH"},{id:"PK"},{id:"PL"},{id:"PM"},{id:"PN"},{id:"PR"},{id:"PS"},{id:"PT"},{id:"PW"},{id:"PY"},{id:"QA"},{id:"RE"},{id:"RO"},{id:"RS"},{id:"RU"},{id:"RW"},{id:"SA"},{id:"SB"},{id:"SC"},{id:"SD"},{id:"SE"},{id:"SG"},{id:"SH"},{id:"SI"},{id:"SJ"},{id:"SK"},{id:"SL"},{id:"SM"},{id:"SN"},{id:"SO"},{id:"SR"},{id:"SS"},{id:"ST"},{id:"SV"},{id:"SX"},{id:"SY"},{id:"SZ"},{id:"TC"},{id:"TD"},{id:"TF"},{id:"TG"},{id:"TH"},{id:"TJ"},{id:"TK"},{id:"TL"},{id:"TM"},{id:"TN"},{id:"TO"},{id:"TR"},{id:"TT"},{id:"TV"},{id:"TW"},{id:"TZ"},{id:"UA"},{id:"UG"},{id:"UM-DQ"},{id:"UM-FQ"},{id:"UM-HQ"},{id:"UM-JQ"},{id:"UM-MQ"},{id:"UM-WQ"},{id:"US"},{id:"UY"},{id:"UZ"},{id:"VA"},{id:"VC"},{id:"VE"},{id:"VG"},{id:"VI"},{id:"VN"},{id:"VU"},{id:"WF"},{id:"WS"},{id:"YE"},{id:"YT"},{id:"ZA"},{id:"ZM"},{id:"ZW"}];
+
+for(var i=0; i<mapData.length; i++){
+  mapData[i]['title'] = d3.select('#' + mapData[i]['id']).attr('title');
+  mapData[i]['count'] = 0;
+  mapData[i]['people'] = [];
+}
+
+// reset winner count for each country
+const resetMapData = function(){
+  for(var i=0; i<mapData.length; i++){
+    mapData[i]['count'] = 0;
+    mapData[i]['people'] = [];
+  }
+}
+
+const findIndex = function(id){
+  for(var i=0; i<mapData.length; i++){
+    if(mapData[i]['id'] == id)
+      return i;
+  }
+  return -1
+}
+
+// needs to be optimized
+const addYear = function(year){
+  yr = final[year];
+  for (var i=0; i<yr.length; i++){
+    // findIndex is O(n) resulting in O(n^2) for add year
+    var x = findIndex(yr[i][0]);
+    if (x == -1){
+      console.log(yr[i][0]);
+      console.log(yr[i][2]);
+    }else{
+      mapData[x]['count'] += yr[i][1];
+      mapData[x]['people'].concat(yr[i][3]);
+    }
+  }
+}
+
+
+const findMax = function(){
   var temp = 0;
-  for( i = 0; i < data.length; i ++){
-    if (data[i][0] > temp)
-      temp = data[i][0];
+  for( i = 0; i < mapData.length; i ++){
+    if (mapData[i]['count'] > temp)
+      temp = mapData[i]['count'];
   }
   return temp;
 }
 
-const updateScale = function(){
+// plots mapData
+const plot = function(){
+  max = findMax();
+  var k = d3.selectAll('path').data(mapData);
+  console.log(k);
+  k.attr('class', function(d){return heat(d);});
+  // scale = 1;
+  // while (scale * scale * scale * scale)
+}
+
+// update the scale for log
+const updateScale = function(scale){
   // do scale switching
 }
 
-// finds the appropriate class bracket for the heat map for a number given the base
-// basically floor(log base b of n)
-// should return 1-5
-const findBracket = function(b, n){
-  var ans = 1;
-  while(n > b){
-    n = n / b;
-    ans++;
+const heat = function(d){
+  console.log(d);
+  if(max < 6){
+    return 'heat' + d['count'];
+  }else{
+    // do log things (post mvp)
   }
-  console.log(ans);
-  return ans;
 }
-
-const plot_heat = function(data){
-  var max = data[0][0];
-  // if linear case else log case
-  if (max < 6){
-    for (var i = 0; i < data.length; i++){
-      var x = d3.selectAll('path[title="' + data[i][1] + '"]');
-      x.attr('class', "heat" + data[i][0]);
-      // //console.logdata);
-      // //console.logcountry);
-    }
-    //console.log'linear');
-  } else{
-    // find appropriate scale
-    //console.log'log');
-    var base = 1;
-    while (base * base * base * base * base < max){
-      // //console.log'log');
-      base++;
-    }
-    for (var i = 0; i < data.length; i++){
-      var x = d3.selectAll('path[title="' + data[i][1] + '"]');
-      x.attr('class', "heat" + findBracket(base, data[i][0]));
-      //console.logdata);
-      //console.logcountry);
-    }
-    // //console.log'log');
-  }
-  //console.log"did the thing");
-}
-
 
 
 /*
@@ -496,18 +520,18 @@ const plot_heat = function(data){
 //better slider (currently does not work)
 //d3.select('body').call(d3.slider().axis(true).min(2000).max(2100).step(5));
 
-console.log("EEEEEE" + final[2000]);
-
-for (x=0; x < final[2000].length; x += 1){
-  var item = "Guam";
-  if (item in final[2000][x]){
-    console.log(final[2000][x]);
-    console.log("true");
-  }
-  else{
-    console.log(final[2000][x]);
-    console.log("false");
-  }
-
-}
-console.log("WWWWW " + final[2000][10]);
+// console.log("EEEEEE" + final[2000]);
+//
+// for (x=0; x < final[2000].length; x += 1){
+//   var item = "Guam";
+//   if (item in final[2000][x]){
+//     console.log(final[2000][x]);
+//     console.log("true");
+//   }
+//   else{
+//     console.log(final[2000][x]);
+//     console.log("false");
+//   }
+//
+// }
+// console.log("WWWWW " + final[2000][10]);
