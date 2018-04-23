@@ -133,6 +133,35 @@ yuyangZ —- 2018-04-19 12:00AM
 	- However zooming out, also triggers the window.
 		- Must be fixed.
 
+yuyangZ —- 2018-04-18 12:00 AM
+- Added legend
+- Year displayed in legend matches year in title with slider.
+- Added popup.
+- Popup is done through javascript.
+- Wrong names popup sometimes.
+
+yuyangZ —- 2018-04-19 12:00AM
+- Added popup windows for placing laureates in tables.
+- Clicking on a country will trigger the window to pop up.
+- However zooming out, also triggers the window.
+	- Must be fixed.
+
+yuyangZ —- 2018-04-20 12:00AM
+- Fixed zooming in for popup window.
+- Fixed if statements.
+- Added table to pop up window.
+- Originally had row pop up every time country is clicked.
+	- Issue has been fixed.
+
+yuyangZ - 2018-04-21 12:00AM
+- Tested with dictionaries/lists.
+- Learned about schema to place data.
+
+yuyangZ - 2018-04-22 12:00AM
+- Created functions to display data onto table.
+- Linked slider to heat map.
+- Fixed laureates year.
+
 charlesW -- 2018-04-22 07:52 PM
   - put labels in js file
   - heat mapping function reworked to be more dynamic
