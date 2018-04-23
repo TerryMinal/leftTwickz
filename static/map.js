@@ -5,302 +5,6 @@
   2018-4-?
 */
 
-
-
-
-/*
-  ==============================================================================
-                          General Variable Declaration
-  ==============================================================================
-*/
-
-// map variables
-const bBox = document.getElementById("map").getBBox();
-var width= bBox.width;
-var height= bBox.height;
-var currCenterX = width/2;
-var currCenterY = height/2;
-var centered;
-
-const entireScreen = d3.select('svg');
-const paths = d3.select('svg').selectAll('path');
-var path_title;
-var projection = d3.geo.mercator();
-
-// zoom variables
-var currZoom = 1;
-var zoom={
-  duration: 1000,
-  zoomLevel: 5
-};
-
-// year counter
-var init_year = 1901;
-
-
-
-
-/*
-  ==============================================================================
-                          Legend Variables and Creation
-  ==============================================================================
-*/
-
-var w = 140, h = 400;
-var key = d3.select("body").append("svg").attr("width", w).attr("height", h);
-var legend = key.append("defs").append("svg:linearGradient")
-                .attr("id", "gradient")
-                .attr("x1", "100%")
-                .attr("y1", "0%")
-                .attr("x2", "100%")
-                .attr("y2", "100%")
-                .attr("spreadMethod", "pad");
-legend.append("stop").attr("offset", "0%").attr("stop-color", "rgba(255,80,80,1)").attr("stop-opacity", 1);
-legend.append("stop").attr("offset", "100%").attr("stop-color", "rgba(255,80,80,.1)").attr("stop-opacity", 1);
-
-key.append("rect").attr("width", w - 100).attr("height", h - 100).style("fill", "url(#gradient)").attr("transform", "translate(0,10)");
-var y = d3.scale.linear().range([300, 0]).domain([1, 100]);
-var yAxis = d3.svg.axis().scale(y).orient("right");
-
-
-/*
-  ==============================================================================
-                                Slider Creation
-  ==============================================================================
-*/
-
-d3.select("body").insert("p", ":first-child").append("input")
-    .attr("type", "range")
-    .attr("min", "1901")
-    .attr("max", "2017")
-    .attr("value", init_year)
-    .attr("id", "year");
-
-d3.select("body").insert("h2", ":first-child").text( "Nobel Laureates in "+ init_year);
-
-
-//when slider is being used
-d3.select("#year").on("input", function() {
-  //update year
-  d3.select("h2").text("Nobel Laureates in " + d3.select("#year").node().value);
-  // update legend
-  d3.selectAll("text").remove();
-  key.append("g").attr("class", "y axis")
-      .attr("transform", "translate(41,10)").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 30).attr("dy", ".71em").style("text-anchor", "end").text("Nobel Laureates in " + d3.select("#year").node().value);
-});
-
-
-
-
-/*
-  ==============================================================================
-                                Tooltop Creation
-  ==============================================================================
-*/
-
-var offsetL = document.getElementById('map-holder').offsetLeft+10;
-var offsetT = document.getElementById('map-holder').offsetTop+10;
-
-var path = d3.geo.path()
-  .projection(projection);
-
-var tooltip = d3.select("#map")
-  .append("div")
-  .attr("class", "tooltip hidden");
-
-function showTooltip(d) {
-  var mouse = d3.mouse(entireScreen.node())
-    .map( function(d) { return parseInt(d); } );
-  tooltip.classed("hidden", false)
-    .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
-    .html(path_title);
-}
-
-function pop_it(currCountry) {
-  var popup = document.getElementById("myPopup");
-  popup.classList.toggle("show");
-  //console.log"popped");
-}
-
-
-/*
-  ==============================================================================
-                            Country Hover Listeners
-  ==============================================================================
-*/
-
-paths.on("mouseover", function(){
-  if (this.getAttribute("class") == "land"){
-  	this.setAttribute("class", "selected");
-  }else{
-  	d3.select(this).style("stroke", "green").style("stroke-width", "1");
-  }
-
-  d3.select(this).style("cursor", "pointer");
-  path_title= this.getAttribute("title");
-  document.getElementById("country").innerHTML = path_title;
-  document.getElementById("myPopup").innerHTML = path_title;
-  pop_it(path_title);
-
-  showTooltip();
-});
-
-paths.on("mouseout", function(){
-  if ((this.getAttribute("class") == "selected")){
-  	this.setAttribute("class", "land");
-  }else{
-  	d3.select(this).style("stroke", "white");
-  }
-  document.getElementById("country").innerHTML = "World Map";
-  pop_it(path_title);
-  path_title = "Ocean";
-});
-
-
-
-/*
-  ==============================================================================
-                         Zoom Related Functions
-  ==============================================================================
-*/
-
-function getCentroid(element) {
-  var bbox = element.getBBox();
-  return [bbox.x + bbox.width/2, bbox.y + bbox.height/2];
-}
-
-function getBiggerDimension(element) {
-  var bbox = element.getBBox();
-  return Math.max(bbox.width, bbox.height);
-}
-
-//adds table to popup
-var created_table = false;
-var table = document.createElement('table');
-table.setAttribute('border','1');
-table.setAttribute('width','100%')
-var row = table.insertRow(0);
-for(j=1; j<=1; j++){
-  var text = document.createTextNode("Info");
-  var cell = row.insertCell(j-1);
-  cell.setAttribute('align','center')
-  cell.appendChild(text);
-}
-for(j=1; j<=1; j++){
-  var text = document.createTextNode("Name");
-  var cell = row.insertCell(j-1);
-  cell.setAttribute('align','center')
-  cell.appendChild(text);
-}
-
-paths.on("click", function(){
-  var x, y, zoomLevel;
-
-  if (this.getAttribute("title") !== "" && centered !== this.getAttribute("title")){
-  	var centroid = getCentroid(this);
-  	x = centroid[0];
-  	y = centroid[1];
-  	zoom.zoomLevel = 600/(getBiggerDimension(this));
-  	centered = this.getAttribute("title");
-  }else{
-  	x =  width/2;
-  	y = height/2;
-  	zoom.zoomLevel = 1;
-  	centered = null;
-  }
-  entireScreen.transition()
-  	.duration(zoom.duration)
-  	.attr('transform','scale(' + zoom.zoomLevel + ')translate(' + width/2 + ',' + height/2 + ')translate(' + -x + ',' + -y + ')');
-  currCenterX = x;
-  currCenterY = y;
-  currZoom = zoom.zoomLevel;
-
-  //console.log"Center X: " + currCenterX);
-  //console.log"Center Y: " + currCenterY);
-  //console.log"Zoom: " + currZoom);
-
-  //popup labels
-  setTimeout(function(){ document.getElementById("myPopup").innerHTML = path_title;}, zoom.duration)
-
-  if (currZoom != 1){
-    if (created_table == false){
-      $( function() {
-        $( "#dialog" ).dialog();
-        //document.getElementById("dialog").appendChild(table);
-        // document.getElementById("dialog").innerHTML = path_title;
-        document.getElementById("dialog").appendChild(table);
-      });
-      created_table = true;
-      //console.logcreated_table);
-    }else{
-      $( function() {
-        $( "#dialog" ).dialog();
-      });
-    }
-  }
-});
-
-
-
-
-/*
-  ==============================================================================
-                         Panning Related Functions
-  ==============================================================================
-*/
-
-var startX;
-var startY;
-
-entireScreen.on("mousedown", function(){
-  var coordinates = [0, 0];
-  coordinates = d3.mouse(this);
-  startX = coordinates[0];
-  startY = coordinates[1];
-});
-
-
-var endX;
-var endY;
-
-entireScreen.on("mouseup", function(){
-  var coordinates = [0, 0];
-  coordinates = d3.mouse(this);
-  endX = coordinates[0];
-  endY = coordinates[1];
-  if (endX == startX && endY == startY){
-  	//console.log"should zoom here if on a country");
-  }else{
-  	var x = -(endX - startX) + currCenterX;
-  	var y = -(endY - startY) + currCenterY;
-    //start - end because in the first translation we push the top left corner of the map to the center of the viewing screen. Therefore, when we translate to the desired center we must negate the value, as seen below.
-  	entireScreen.transition()
-	    .duration(zoom.duration)
-	    .attr('transform','scale(' + currZoom + ')translate(' + width/2 + ',' + height/2 + ')translate(' + -x + ',' + -y + ')');
-
-  	currCenterX = x;
-  	currCenterY = y;
-    }
-});
-
-/*
-var pan = d3.behavior.drag()
-    .on("drag", function() {
-	var dx = d3.event.dx;
-	var dy = d3.event.dy;
-	//console.logdx,dy);
-	entireScreen.transition()
-	    .duration(zoom.duration)
-	    .attr('transform','translate(' + screen.width/2 + ',' + screen.height/2 + ')translate(' + dx + ',' + dy + ')scale(' + zoom.zoomLevel + ')');
-});
-
-
-entireScreen.call(pan);
-*/
-
-
-
-
 /*
   ==============================================================================
                                   DATA INITIATION
@@ -417,6 +121,336 @@ for (var yr = 1901; yr < 2019; yr++) {
 } // year for loop
 
 
+/*
+  ==============================================================================
+                                Slider Creation
+  ==============================================================================
+*/
+
+d3.select("body").insert("p", ":first-child").append("input")
+    .attr("type", "range")
+    .attr("min", "1901")
+    .attr("max", "2017")
+    .attr("value", init_year)
+    .attr("id", "year");
+
+d3.select("body").insert("h2", ":first-child").text( "Nobel Laureates in "+ init_year);
+
+
+//when slider is being used
+d3.select("#year").on("input", function() {
+  //update year
+  d3.select("h2").text("Nobel Laureates in " + d3.select("#year").node().value);
+  // update legend
+  d3.selectAll("text").remove();
+  key.append("g").attr("class", "y axis")
+      .attr("transform", "translate(41,10)").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 30).attr("dy", ".71em").style("text-anchor", "end").text("Nobel Laureates in " + d3.select("#year").node().value);
+});
+
+
+
+
+/*
+  ==============================================================================
+                          General Variable Declaration
+  ==============================================================================
+*/
+
+// map variables
+const bBox = document.getElementById("map").getBBox();
+var width= bBox.width;
+var height= bBox.height;
+var currCenterX = width/2;
+var currCenterY = height/2;
+var centered;
+
+const entireScreen = d3.select('svg');
+const paths = d3.select('svg').selectAll('path');
+var path_title;
+var projection = d3.geo.mercator();
+
+// zoom variables
+var currZoom = 1;
+var zoom={
+  duration: 1000,
+  zoomLevel: 5
+};
+
+// year counter
+var init_year = 1901;
+
+
+
+
+/*
+  ==============================================================================
+                          Legend Variables and Creation
+  ==============================================================================
+*/
+
+var w = 140, h = 400;
+var key = d3.select("body").append("svg").attr("width", w).attr("height", h);
+var legend = key.append("defs").append("svg:linearGradient")
+                .attr("id", "gradient")
+                .attr("x1", "100%")
+                .attr("y1", "0%")
+                .attr("x2", "100%")
+                .attr("y2", "100%")
+                .attr("spreadMethod", "pad");
+legend.append("stop").attr("offset", "0%").attr("stop-color", "rgba(255,80,80,1)").attr("stop-opacity", 1);
+legend.append("stop").attr("offset", "100%").attr("stop-color", "rgba(255,80,80,.1)").attr("stop-opacity", 1);
+
+key.append("rect").attr("width", w - 100).attr("height", h - 100).style("fill", "url(#gradient)").attr("transform", "translate(0,10)");
+var y = d3.scale.linear().range([300, 0]).domain([1, 100]);
+var yAxis = d3.svg.axis().scale(y).orient("right");
+
+
+
+/*
+  ==============================================================================
+                                Tooltop Creation
+  ==============================================================================
+*/
+
+var offsetL = document.getElementById('map-holder').offsetLeft+10;
+var offsetT = document.getElementById('map-holder').offsetTop+10;
+
+var path = d3.geo.path()
+  .projection(projection);
+
+var tooltip = d3.select("#map")
+  .append("div")
+  .attr("class", "tooltip hidden");
+
+function showTooltip(d) {
+  var mouse = d3.mouse(entireScreen.node())
+    .map( function(d) { return parseInt(d); } );
+  tooltip.classed("hidden", false)
+    .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
+    .html(path_title);
+}
+
+function pop_it(currCountry) {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+  //console.log"popped");
+}
+
+
+/*
+  ==============================================================================
+                            Country Hover Listeners
+  ==============================================================================
+*/
+
+paths.on("mouseover", function(){
+  if (this.getAttribute("class") == "land"){
+  	this.setAttribute("class", "selected");
+  }else{
+  	d3.select(this).style("stroke", "green").style("stroke-width", "1");
+  }
+
+  d3.select(this).style("cursor", "pointer");
+  path_title= this.getAttribute("title");
+  document.getElementById("country").innerHTML = path_title;
+  document.getElementById("myPopup").innerHTML = path_title;
+  pop_it(path_title);
+
+  showTooltip();
+});
+
+paths.on("mouseout", function(){
+  if ((this.getAttribute("class") == "selected")){
+  	this.setAttribute("class", "land");
+  }else{
+  	d3.select(this).style("stroke", "white");
+  }
+  document.getElementById("country").innerHTML = "World Map";
+  pop_it(path_title);
+  path_title = "Ocean";
+});
+
+
+
+/*
+  ==============================================================================
+                         Zoom Related Functions
+  ==============================================================================
+*/
+
+function getCentroid(element) {
+  var bbox = element.getBBox();
+  return [bbox.x + bbox.width/2, bbox.y + bbox.height/2];
+}
+
+function getBiggerDimension(element) {
+  var bbox = element.getBBox();
+  return Math.max(bbox.width, bbox.height);
+}
+
+//adds table to popup
+var created_table = false;
+var table = document.createElement('table');
+table.setAttribute('border','1');
+table.setAttribute('width','100%')
+var row = table.insertRow(0);
+for(j=1; j<=1; j++){
+  var text = document.createTextNode("Info");
+  var cell = row.insertCell(j-1);
+  cell.setAttribute('align','center')
+  cell.appendChild(text);
+}
+for(j=1; j<=1; j++){
+  var text = document.createTextNode("Name");
+  var cell = row.insertCell(j-1);
+  cell.setAttribute('align','center')
+  cell.appendChild(text);
+}
+
+//final[d3.select("#year").node().value]
+/*
+console.log(d3.select("#year").node().value);
+//console.log(final[d3.select("#year").node().value][232][3]);
+for (x in final[2017][232][3]){
+console.log(final[2017][232][3][x]["name"]);
+console.log(final[2017][232][3][x]["motivation"]);
+};
+*/
+
+var fill_laureates = function(a,b,c){
+  for (x in final[a][b][c]){
+  console.log("NAME " + final[a][b][c][x]["name"]);
+  console.log("MOT " + final[a][b][c][x]["motivation"]);
+  console.log(x);
+  };
+}
+
+
+
+var fill_table = function(){
+for (x = 0; x < final[2017].length; x+=1){
+  console.log(final[2017][x][2]);
+  if (final[2017][x][2] == "United States"){
+  fill_laureates(2017, x, 3);
+  }
+  }
+};
+
+ console.log("this is cheese");
+console.log(fill_table());
+
+paths.on("click", function(){
+
+  var x, y, zoomLevel;
+
+  if (this.getAttribute("title") !== "" && centered !== this.getAttribute("title")){
+  	var centroid = getCentroid(this);
+  	x = centroid[0];
+  	y = centroid[1];
+  	zoom.zoomLevel = 600/(getBiggerDimension(this));
+  	centered = this.getAttribute("title");
+  }else{
+  	x =  width/2;
+  	y = height/2;
+  	zoom.zoomLevel = 1;
+  	centered = null;
+  }
+  entireScreen.transition()
+  	.duration(zoom.duration)
+  	.attr('transform','scale(' + zoom.zoomLevel + ')translate(' + width/2 + ',' + height/2 + ')translate(' + -x + ',' + -y + ')');
+  currCenterX = x;
+  currCenterY = y;
+  currZoom = zoom.zoomLevel;
+
+  //console.log"Center X: " + currCenterX);
+  //console.log"Center Y: " + currCenterY);
+  //console.log"Zoom: " + currZoom);
+
+  //popup labels
+  setTimeout(function(){ document.getElementById("myPopup").innerHTML = path_title;}, zoom.duration)
+
+fill_table();
+  if (currZoom != 1){
+    if (created_table == false){
+      $( function() {
+        $( "#dialog" ).dialog();
+        //document.getElementById("dialog").appendChild(table);
+        // document.getElementById("dialog").innerHTML = path_title;
+        document.getElementById("dialog").appendChild(table);
+      });
+      created_table = true;
+      //console.logcreated_table);
+    }else{
+      $( function() {
+        $( "#dialog" ).dialog();
+      });
+    }
+  }
+});
+
+
+
+
+/*
+  ==============================================================================
+                         Panning Related Functions
+  ==============================================================================
+*/
+
+var startX;
+var startY;
+
+entireScreen.on("mousedown", function(){
+  var coordinates = [0, 0];
+  coordinates = d3.mouse(this);
+  startX = coordinates[0];
+  startY = coordinates[1];
+});
+
+
+var endX;
+var endY;
+
+entireScreen.on("mouseup", function(){
+  var coordinates = [0, 0];
+  coordinates = d3.mouse(this);
+  endX = coordinates[0];
+  endY = coordinates[1];
+  if (endX == startX && endY == startY){
+  	//console.log"should zoom here if on a country");
+  }else{
+  	var x = -(endX - startX) + currCenterX;
+  	var y = -(endY - startY) + currCenterY;
+    //start - end because in the first translation we push the top left corner of the map to the center of the viewing screen. Therefore, when we translate to the desired center we must negate the value, as seen below.
+  	entireScreen.transition()
+	    .duration(zoom.duration)
+	    .attr('transform','scale(' + currZoom + ')translate(' + width/2 + ',' + height/2 + ')translate(' + -x + ',' + -y + ')');
+
+  	currCenterX = x;
+  	currCenterY = y;
+    }
+});
+
+/*
+var pan = d3.behavior.drag()
+    .on("drag", function() {
+	var dx = d3.event.dx;
+	var dy = d3.event.dy;
+	//console.logdx,dy);
+	entireScreen.transition()
+	    .duration(zoom.duration)
+	    .attr('transform','translate(' + screen.width/2 + ',' + screen.height/2 + ')translate(' + dx + ',' + dy + ')scale(' + zoom.zoomLevel + ')');
+});
+
+
+entireScreen.call(pan);
+*/
+
+
+
+
+
+
 
 
 /*
@@ -496,18 +530,8 @@ const plot_heat = function(data){
 //better slider (currently does not work)
 //d3.select('body').call(d3.slider().axis(true).min(2000).max(2100).step(5));
 
-console.log("EEEEEE" + final[2000]);
+//console.log(final["all"]);
+//var item = "USA";
+////  console.log(final[2017][x][2]);
 
-for (x=0; x < final[2000].length; x += 1){
-  var item = "Guam";
-  if (item in final[2000][x]){
-    console.log(final[2000][x]);
-    console.log("true");
-  }
-  else{
-    console.log(final[2000][x]);
-    console.log("false");
-  }
-
-}
-console.log("WWWWW " + final[2000][10]);
+//console.log("yeah");
