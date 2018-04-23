@@ -553,8 +553,9 @@ const updateScale = function(scale){
 }
 
 const heat = function(d){
-  console.log(d);
-  if(max < 6){
+  if(d['count'] != 0)
+    console.log(d);
+  if(d['count'] < 6){
     return 'heat' + d['count'];
   }else{
     return 'heat5';
