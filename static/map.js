@@ -127,6 +127,8 @@ for (var yr = 1901; yr < 2019; yr++) {
   ==============================================================================
 */
 
+var init_year = 1901;
+
 d3.select("body").insert("p", ":first-child").append("input")
     .attr("type", "range")
     .attr("min", "1901")
@@ -177,7 +179,7 @@ var zoom={
 };
 
 // year counter
-var init_year = 1901;
+
 
 
 
