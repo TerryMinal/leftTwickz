@@ -26,12 +26,15 @@
   width: 1009.114990234375px;
 }
 
-.land, .heat0{
-  fill: #CCCCCC;
+path {
   fill-opacity: 1;
   stroke:white;
   stroke-opacity: 1;
   stroke-width:0.5;
+}
+
+.land, .heat0{
+  fill: #CCCCCC;
 }
 
 .selected{
@@ -41,42 +44,22 @@
 
 .heat1{
   fill: rgba(255,80,80,.1);
-  fill-opacity: 1;
-  stroke:white;
-  stroke-opacity: 1;
-  stroke-width:0.5;
 }
 
 .heat2{
   fill: rgba(255,80,80,.325);
-  fill-opacity: 1;
-  stroke:white;
-  stroke-opacity: 1;
-  stroke-width:0.5;
 }
 
 .heat3{
   fill: rgba(255,80,80,.45);
-  fill-opacity: 1;
-  stroke:white;
-  stroke-opacity: 1;
-  stroke-width:0.5;
 }
 
 .heat4{
   fill: rgba(255,80,80,.75);
-  fill-opacity: 1;
-  stroke:white;
-  stroke-opacity: 1;
-  stroke-width:0.5;
 }
 
 .heat5{
   fill: rgba(255,80,80,1);
-  fill-opacity: 1;
-  stroke:white;
-  stroke-opacity: 1;
-  stroke-width:0.5;
 }
 
 .heatSelect{
@@ -115,7 +98,7 @@
     padding: 8px 0;
     position: absolute;
     z-index: 1;
-    
+
     top:50%;
     left: 50%;
     margin-left: -80px;
@@ -138,7 +121,7 @@
     margin-left: -80px;
 
 }
- 
+
 
 /* Popup arrow */
 /*
