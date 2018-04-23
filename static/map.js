@@ -332,21 +332,21 @@ console.log(final[2017][232][3][x]["motivation"]);
 
 var fill_laureates = function(a,b,c){
   for (x in final[a][b][c]){
-    console.log("NAME " + final[a][b][c][x]["name"]);
-    console.log("MOT " + final[a][b][c][x]["motivation"]);
-    console.log(x);
+    console.log(final[a][b][c][x]["name"]);
+    console.log(final[a][b][c][x]["motivation"]);
+
   };
 }
 
 
 
 var fill_table = function(p){
-  for (x = 0; x < final[2017].length; x+=1){
-    if (final[2017][x][2].indexOf(p) != -1){
-      if (final[2017][x][3].length == 0) {
+  for (x = 0; x < final[d3.select("#year").node().value].length; x+=1){
+    if (final[d3.select("#year").node().value][x][2].indexOf(p) != -1){
+      if (final[d3.select("#year").node().value][x][3].length == 0) {
         console.log("no laureates");
       }
-      fill_laureates(2017, x, 3);
+      fill_laureates(d3.select("#year").node().value, x, 3);
     }
   }
 };
@@ -386,8 +386,9 @@ paths.on("click", function(){
   if (path_title == "United States") {
     path_title = "USA";
   }
-  fill_table(path_title);
+
   if (currZoom != 1){
+        fill_table(path_title);
     if (created_table == false){
       $( function() {
         $( "#dialog" ).dialog();
