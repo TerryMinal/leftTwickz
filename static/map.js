@@ -5,6 +5,38 @@ P #01: Viz
 2018-4-?
 */
 
+
+
+
+/*
+==============================================================================
+General Variable Declaration
+==============================================================================
+*/
+
+// map variables
+const bBox = document.getElementById("map").getBBox();
+var width= bBox.width;
+var height= bBox.height;
+var currCenterX = width/2;
+var currCenterY = height/2;
+var centered;
+
+const entireScreen = d3.select('svg');
+const paths = d3.select('svg').selectAll('path');
+var path_title;
+var projection = d3.geo.mercator();
+
+// zoom variables
+var currZoom = 1;
+var zoom={
+  duration: 1000,
+  zoomLevel: 5
+};
+
+
+
+
 /*
 ==============================================================================
 DATA INITIATION
@@ -121,6 +153,8 @@ for (var yr = 1901; yr < 2019; yr++) {
 } // year for loop
 
 
+
+
 /*
 ==============================================================================
 Slider Creation
@@ -130,11 +164,11 @@ Slider Creation
 var init_year = 1901;
 
 d3.select("body").insert("p", ":first-child").append("input")
-.attr("type", "range")
-.attr("min", "1901")
-.attr("max", "2017")
-.attr("value", init_year)
-.attr("id", "year");
+  .attr("type", "range")
+  .attr("min", "1901")
+  .attr("max", "2017")
+  .attr("value", init_year)
+  .attr("id", "year");
 
 d3.select("body").insert("h2", ":first-child").text( "Nobel Laureates in "+ init_year);
 
@@ -146,44 +180,18 @@ d3.select("#year").on("input", function() {
   // update legend
   d3.selectAll("text").remove();
   key.append("g").attr("class", "y axis")
-  .attr("transform", "translate(41,10)").call(yAxis).append("text").attr("transform", "rotate(-90)").attr("y", 30).attr("dy", ".71em").style("text-anchor", "end").text("Nobel Laureates in " + d3.select("#year").node().value);
-resetMapData();
-addYear(d3.select("#year").node().value);
-plot();
-
+    .attr("transform", "translate(41,10)")
+    .call(yAxis)
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 30).attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Nobel Laureates in " + d3.select("#year")
+    .node().value);
+  resetMapData();
+  addYear(d3.select("#year").node().value);
+  plot();
 });
-
-
-
-
-/*
-==============================================================================
-General Variable Declaration
-==============================================================================
-*/
-
-// map variables
-const bBox = document.getElementById("map").getBBox();
-var width= bBox.width;
-var height= bBox.height;
-var currCenterX = width/2;
-var currCenterY = height/2;
-var centered;
-
-const entireScreen = d3.select('svg');
-const paths = d3.select('svg').selectAll('path');
-var path_title;
-var projection = d3.geo.mercator();
-
-// zoom variables
-var currZoom = 1;
-var zoom={
-  duration: 1000,
-  zoomLevel: 5
-};
-
-// year counter
-
 
 
 
@@ -197,18 +205,19 @@ Legend Variables and Creation
 var w = 140, h = 400;
 var key = d3.select("body").append("svg").attr("width", w).attr("height", h);
 var legend = key.append("defs").append("svg:linearGradient")
-.attr("id", "gradient")
-.attr("x1", "100%")
-.attr("y1", "0%")
-.attr("x2", "100%")
-.attr("y2", "100%")
-.attr("spreadMethod", "pad");
+  .attr("id", "gradient")
+  .attr("x1", "100%")
+  .attr("y1", "0%")
+  .attr("x2", "100%")
+  .attr("y2", "100%")
+  .attr("spreadMethod", "pad");
 legend.append("stop").attr("offset", "0%").attr("stop-color", "rgba(255,80,80,1)").attr("stop-opacity", 1);
 legend.append("stop").attr("offset", "100%").attr("stop-color", "rgba(255,80,80,.1)").attr("stop-opacity", 1);
 
 key.append("rect").attr("width", w - 100).attr("height", h - 100).style("fill", "url(#gradient)").attr("transform", "translate(0,10)");
 var y = d3.scale.linear().range([300, 0]).domain([1, 5]);
 var yAxis = d3.svg.axis().scale(y).orient("right");
+
 
 
 
@@ -241,6 +250,8 @@ function pop_it(currCountry) {
   popup.classList.toggle("show");
   //console.log"popped");
 }
+
+
 
 
 /*
@@ -286,6 +297,7 @@ paths.on("mouseout", function(){
   pop_it(path_title);
   path_title = "Ocean";
 });
+
 
 
 
@@ -471,10 +483,6 @@ entireScreen.call(pan);
 
 
 
-
-
-
-
 /*
 ==============================================================================
 Data Manipulation
@@ -518,8 +526,8 @@ const addYear = function(year){
     // findIndex is O(n) resulting in O(n^2) for add year
     var x = findIndex(yr[i][0]);
     if (x == -1){
-      console.log(yr[i][0]);
-      console.log(yr[i][2]);
+      // console.log(yr[i][0]);
+      // console.log(yr[i][2]);
     }else{
       mapData[x]['count'] += yr[i][1];
       mapData[x]['people'].concat(yr[i][3]);
@@ -562,8 +570,23 @@ const heat = function(d){
   }
 }
 
-addYear(d3.select("#year").node().value);
+
+
+
+/*
+==============================================================================
+Final Setup
+==============================================================================
+*/
+
+d3.select('h2').text("All Noble Laureates");
+for(var i = 1901; i < 2018; i ++){
+  addYear(i);
+}
 plot();
+
+
+
 
 /*
 ==============================================================================
