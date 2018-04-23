@@ -557,7 +557,7 @@ const heat = function(d){
   if(max < 6){
     return 'heat' + d['count'];
   }else{
-    // do log things (post mvp)
+    return 'heat5';
   }
 }
 
