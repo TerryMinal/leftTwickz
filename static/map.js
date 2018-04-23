@@ -531,7 +531,7 @@ const addYear = function(year){
       // console.log(yr[i][2]);
     }else{
       mapData[x]['count'] += yr[i][1];
-      mapData[x]['people'] = mapData[x]['people'].concat(yr[i][3]);
+      mapData[x]['people'].concat(yr[i][3]);
     }
   }
 }
