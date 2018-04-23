@@ -276,10 +276,10 @@ paths.on("mouseover", function(){
   popup.innerHTML = path_title;
 
   var x = event.clientX;     // Get the horizontal coordinate
-  var y = event.clientY;
+  var y = event.clientY -45;
   //console.log("xcor: " + x + " ycor: " + y);
-  popup.style.left = x-125+"px";
-  popup.style.top = y-155+"px";
+  popup.style.left = x+"px";
+  popup.style.top = y+"px";
 
   pop_it(path_title);
 
@@ -318,56 +318,79 @@ function getBiggerDimension(element) {
 }
 
 //adds table to popup
-var created_table = false;
-var table = document.createElement('table');
-table.setAttribute('border','1');
-table.setAttribute('width','100%')
-var row = table.insertRow(0);
-for(j=1; j<=1; j++){
-  var text = document.createTextNode("Info");
-  var cell = row.insertCell(j-1);
-  cell.setAttribute('align','center')
-  cell.appendChild(text);
-}
-for(j=1; j<=1; j++){
-  var text = document.createTextNode("Name");
-  var cell = row.insertCell(j-1);
-  cell.setAttribute('align','center')
-  cell.appendChild(text);
-}
-
-//final[d3.select("#year").node().value]
-/*
-console.log(d3.select("#year").node().value);
-//console.log(final[d3.select("#year").node().value][232][3]);
-for (x in final[2017][232][3]){
-console.log(final[2017][232][3][x]["name"]);
-console.log(final[2017][232][3][x]["motivation"]);
-};
-*/
-
 var fill_laureates = function(a,b,c){
+  var l = [];
   for (x in final[a][b][c]){
+    console.log(final[a][b][c]);
     console.log(final[a][b][c][x]["name"]);
     console.log(final[a][b][c][x]["motivation"]);
-
+    l.push(final[a][b][c][x]);
   };
+  console.log("laureate");
+  console.log(final[a][b][c][x]);
+  return l;
 }
-
 
 
 var fill_table = function(p){
-  for (x = 0; x < final[d3.select("#year").node().value].length; x+=1){
-    if (final[d3.select("#year").node().value][x][2].indexOf(p) != -1){
-      if (final[d3.select("#year").node().value][x][3].length == 0) {
+  yr = d3.select("#year").node().value;
+  for (x = 0; x < final[yr].length; x+=1){
+    console.log(final[yr][x][2]);
+    if (final[yr][x][2].indexOf(p) != -1){
+      if (final[yr][x][3].length == 0) {
         console.log("no laureates");
       }
-      fill_laureates(d3.select("#year").node().value, x, 3);
+      l = fill_laureates(d3.select("#year").node().value, x, 3);
+      console.log("this is l");
+      console.log(l);
+      table = document.createElement('table');
+      table.setAttribute('border','1');
+      table.setAttribute('width','100%');
+      rowNumber = 0;
+      row = table.insertRow(rowNumber);
+      cell = row.insertCell(0);
+      cell.setAttribute('align','center')
+      cell.appendChild(document.createTextNode("Name"));
+      cell = row.insertCell(1);
+      cell.setAttribute('align','center')
+      cell.appendChild(document.createTextNode("Share"));
+      cell = row.insertCell(2);
+      cell.setAttribute('align','center')
+      cell.appendChild(document.createTextNode("Motivation"));
+      cell = row.insertCell(3);
+      cell.setAttribute('align','center')
+      cell.appendChild(document.createTextNode("Category"));
+      cell = row.insertCell(4);
+      cell.setAttribute('align','center')
+      cell.appendChild(document.createTextNode("Born"));
+      rowNumber += 1;
+      for (var i = 0; i < l.length; i++) {
+        console.log(l[i]);
+        z = l[i];
+        // create_row(z["name"], z["share"], z["motivation"], z["category"], z["bornCountry"]);
+        row = table.insertRow(rowNumber);
+        rowNumber+= 1;
+        cell = row.insertCell(0);
+        cell.setAttribute('align','center')
+        cell.appendChild(document.createTextNode(z["name"]));
+        cell = row.insertCell(1);
+        cell.setAttribute('align','center')
+        cell.appendChild(document.createTextNode(z["share"]));
+        cell = row.insertCell(2);
+        cell.setAttribute('align','center')
+        cell.appendChild(document.createTextNode(z["motivation"]));
+        cell = row.insertCell(3);
+        cell.setAttribute('align','center')
+        cell.appendChild(document.createTextNode(z["category"]));
+        cell = row.insertCell(4);
+        cell.setAttribute('align','center')
+        cell.appendChild(document.createTextNode(z["bornCountry"]));
+      }
+      return table;
+      break;
     }
   }
 };
-
-console.log("this is cheese");
 
 paths.on("click", function(){
 
@@ -404,22 +427,15 @@ paths.on("click", function(){
   }
 
   if (currZoom != 1){
-        fill_table(path_title);
-    if (created_table == false){
+      // document.getElementById("dialog").appendChild(table);
       $( function() {
-        $( "#dialog" ).dialog();
-        //document.getElementById("dialog").appendChild(table);
-        // document.getElementById("dialog").innerHTML = path_title;
-        document.getElementById("dialog").appendChild(table);
-      });
-      created_table = true;
-      //console.logcreated_table);
-    }else{
-      $( function() {
-        $( "#dialog" ).dialog();
-      });
-    }
-  }
+        t = fill_table(path_title);
+          $( "#dialog" ).dialog();
+          document.getElementById("dialog").innerHTML = '';
+          document.getElementById("dialog").appendChild(t);
+        });
+      }
+
 });
 
 

@@ -113,7 +113,7 @@ path {
     text-align: center;
     border-radius: 6px;
     padding: 8px 0;
-    position: absolute;
+    position: fixed;
     z-index: 1;
     /*bottom: 125%;*/
     top:50%;
@@ -138,7 +138,7 @@ path {
 */
 .popuptext::after {
     content: "";
-    position: absolute;
+    position: fixed;
     top: 100%;
     left: 50%;
     margin-left: -5px;
