@@ -203,7 +203,7 @@ Legend Variables and Creation
 */
 
 var w = 140, h = 400;
-var key = d3.select("#legend1").append("svg").attr("width", w).attr("height", h);
+var key = d3.select("body").append("svg").attr("width", w).attr("height", h);
 var legend = key.append("defs").append("svg:linearGradient")
   .attr("id", "gradient")
   .attr("x1", "100%")
@@ -505,7 +505,6 @@ for(var i=0; i<mapData.length; i++){
 
 // reset winner count for each country
 const resetMapData = function(){
-  console.clear();
   for(var i=0; i<mapData.length; i++){
     mapData[i]['count'] = 0;
     mapData[i]['people'] = [];
