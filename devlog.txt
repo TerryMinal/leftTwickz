@@ -169,4 +169,3 @@ charlesW -- 2018-04-22 07:52 PM
     - addYear() adds a year to the data
     - plot() plots current data
   - reworked classes to take advantage of class precedence
-  - cleaned up css for paths
