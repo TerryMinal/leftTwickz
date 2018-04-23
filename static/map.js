@@ -67,6 +67,7 @@ for (var i = 0;  i < countries.length; i++) {
 countries = temp;
 //  adjusts for discrepancies between country api and nobelprize api
 countries[countries.indexOf('United States of America')] = 'USA';
+countries[countries.indexOf('Russian Federation')] = 'Russia';
 countries[countries.indexOf('United Kingdom of Great Britain and Northern Ireland')] = 'United Kingdom';
 // end of creating countries array
 
@@ -88,7 +89,7 @@ var laureates = [];
 for (var i = 0; i < data.length; i++) {
   if (data[i]['born'] != '0000-00-00') {
     p = data[i];
-    laureate = {"name": p['firstname'] + p['surname'], "bornCountry": p['bornCountry'], "category": p['prizes'][0]['category'], "awardYear": p['prizes'][0]['year'], "motivation": p['prizes'][0]['motivation'], "share": p['prizes'][0]['share']};
+    laureate = {"name": p['firstname'] + ' ' + p['surname'], "bornCountry": p['bornCountry'], "category": p['prizes'][0]['category'], "awardYear": p['prizes'][0]['year'], "motivation": p['prizes'][0]['motivation'], "share": p['prizes'][0]['share']};
     laureates.push(laureate);
   } // end of if
 } // end of data iteration
